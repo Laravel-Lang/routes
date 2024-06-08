@@ -2,9 +2,13 @@
 
 namespace Tests;
 
-use PHPUnit\Framework\TestCase as BaseTestCase;
+use LaravelLang\Routes\ServiceProvider;
+use Orchestra\Testbench\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    //
+    protected function getPackageProviders($app): array
+    {
+        return [ServiceProvider::class];
+    }
 }
