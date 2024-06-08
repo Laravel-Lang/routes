@@ -2,13 +2,17 @@
 
 namespace Tests;
 
-use LaravelLang\Routes\ServiceProvider;
+use LaravelLang\Locales\ServiceProvider as LocalesServiceProvider;
+use LaravelLang\Routes\ServiceProvider as RoutesServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
     protected function getPackageProviders($app): array
     {
-        return [ServiceProvider::class];
+        return [
+            RoutesServiceProvider::class,
+            LocalesServiceProvider::class,
+        ];
     }
 }
