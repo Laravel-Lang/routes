@@ -32,6 +32,7 @@
         "illuminate/support": "10.0 || ^11.0"
     },
     "require-dev": {
+        "pestphp/pest": "^2.34",
         "symfony/var-dumper": "^6.0 || ^7.0"
     },
     "minimum-stability": "stable",
@@ -52,7 +53,8 @@
             "dragon-code/codestyler": true,
             "ergebnis/composer-normalize": true,
             "php-http/discovery": true,
-            "symfony/thanks": true
+            "symfony/thanks": true,
+            "pestphp/pest-plugin": true
         },
         "preferred-install": "dist",
         "sort-packages": true
