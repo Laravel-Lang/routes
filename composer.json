@@ -1,0 +1,67 @@
+{
+    "name": "laravel-lang/routes",
+    "description": "Easy and fast way to localize routes",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "languages",
+        "routes",
+        "translations",
+        "translate",
+        "localization",
+        "l18n"
+    ],
+    "authors": [
+        {
+            "name": "Andrey Helldar",
+            "email": "helldar@dragon-code.pro",
+            "homepage": "https://dragon-code.pro"
+        },
+        {
+            "name": "Laravel-Lang Team",
+            "homepage": "https://github.com/Laravel-Lang"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Laravel-Lang/routes/issues",
+        "source": "https://github.com/Laravel-Lang/routes"
+    },
+    "require": {
+        "php": "^8.2",
+        "ext-json": "*",
+        "illuminate/support": "10.0 || ^11.0"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^6.0 || ^7.0"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "LaravelLang\\Routes\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "dragon-code/codestyler": true,
+            "ergebnis/composer-normalize": true,
+            "php-http/discovery": true,
+            "symfony/thanks": true
+        },
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaravelLang\\Routes\\ServiceProvider"
+            ]
+        }
+    }
+}
