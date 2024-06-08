@@ -38,10 +38,5 @@ jobs:
             -   name: Install dependencies
                 run: composer require laravel/framework:^${{ matrix.laravel }}
 
-            -   name: Testing cache optimization
-                run: |
-                    php artisan optimize
-                    php artisan optimize:clear
-
             -   name: Execute tests
                 run: composer test
