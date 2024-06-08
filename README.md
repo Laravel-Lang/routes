@@ -7,6 +7,15 @@
 [![Github Workflow Status][badge_build]][link_build]
 [![License][badge_license]](https://laravel-lang.com/license.html)
 
+## ToDo
+
+Localization by:
+
+- [ ] route parameter
+- [ ] X-header
+- [ ] cookies
+- [ ] session data ?
+
 ## Documentation
 
 See the [documentation](https://laravel-lang.com/packages-routes.html) for detailed installation.
