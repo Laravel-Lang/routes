@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class SessionLocale extends Middleware
 {
-    protected function detect(Request $request): string|int|float|bool|null
+    protected function detect(Request $request): bool|float|int|string|null
     {
         return $request->getSession()->get($this->names()->session);
     }

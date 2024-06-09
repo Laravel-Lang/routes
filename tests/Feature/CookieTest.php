@@ -5,12 +5,13 @@ declare(strict_types=1);
 use LaravelLang\Config\Facades\Config;
 use Tests\Constants\LocaleValue;
 
-use function Pest\Laravel\withCookie;
+use function Pest\Laravel\withCredentials;
 
 test('main locale', function (string $locale) {
     $time = time();
 
-    withCookie(Config::shared()->routes->names->cookie, $locale)
+    withCredentials()
+        ->withCookie(Config::shared()->routes->names->cookie, $locale)
         ->getJson(route('via.cookie', compact('time')))
         ->assertSuccessful()
         ->assertJsonPath('message', LocaleValue::TranslationFrench)
@@ -20,7 +21,8 @@ test('main locale', function (string $locale) {
 test('aliased locale', function (string $locale) {
     $time = time();
 
-    withCookie(Config::shared()->routes->names->cookie, $locale)
+    withCredentials()
+        ->withCookie(Config::shared()->routes->names->cookie, $locale)
         ->getJson(route('via.cookie', compact('time')))
         ->assertSuccessful()
         ->assertJsonPath('message', LocaleValue::TranslationGerman)
@@ -30,7 +32,8 @@ test('aliased locale', function (string $locale) {
 test('empty locale', function (int|string|null $locale) {
     $time = time();
 
-    withCookie(Config::shared()->routes->names->cookie, (string) $locale)
+    withCredentials()
+        ->withCookie(Config::shared()->routes->names->cookie, (string) $locale)
         ->getJson(route('via.cookie', compact('time')))
         ->assertSuccessful()
         ->assertJsonPath('message', LocaleValue::TranslationFrench)
@@ -40,7 +43,8 @@ test('empty locale', function (int|string|null $locale) {
 test('uninstalled locale', function (string $locale) {
     $time = time();
 
-    withCookie(Config::shared()->routes->names->cookie, (string) $locale)
+    withCredentials()
+        ->withCookie(Config::shared()->routes->names->cookie, $locale)
         ->getJson(route('via.cookie', compact('time')))
         ->assertSuccessful()
         ->assertJsonPath('message', LocaleValue::TranslationFrench)
@@ -50,7 +54,8 @@ test('uninstalled locale', function (string $locale) {
 test('unknown locale', function (int|string $locale) {
     $time = time();
 
-    withCookie(Config::shared()->routes->names->cookie, (string) $locale)
+    withCredentials()
+        ->withCookie(Config::shared()->routes->names->cookie, (string) $locale)
         ->getJson(route('via.cookie', compact('time')))
         ->assertSuccessful()
         ->assertJsonPath('message', LocaleValue::TranslationFrench)

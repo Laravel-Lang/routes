@@ -15,7 +15,7 @@ abstract class Middleware
 {
     use KeyNames;
 
-    abstract protected function detect(Request $request): string|int|float|bool|null;
+    abstract protected function detect(Request $request): bool|float|int|string|null;
 
     public function __invoke(Request $request, Closure $next)
     {

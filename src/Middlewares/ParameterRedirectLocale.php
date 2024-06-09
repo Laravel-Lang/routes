@@ -26,7 +26,7 @@ class ParameterRedirectLocale extends Middleware
         return parent::__invoke($request, $next);
     }
 
-    protected function detect(Request $request): string|int|float|bool|null
+    protected function detect(Request $request): bool|float|int|string|null
     {
         return $request->route()?->parameter($this->names()->parameter);
     }
@@ -60,7 +60,7 @@ class ParameterRedirectLocale extends Middleware
         return Locales::getDefault()->code;
     }
 
-    protected function isInstalled(string|int|float|bool|null $parameter): bool
+    protected function isInstalled(bool|float|int|string|null $parameter): bool
     {
         return Locales::isInstalled((string) $parameter);
     }
