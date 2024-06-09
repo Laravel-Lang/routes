@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Tests\Concerns;
 
 use Closure;
-use LaravelLang\Routes\Middlewares\CookiesLocale;
-use LaravelLang\Routes\Middlewares\HeaderLocale;
-use LaravelLang\Routes\Middlewares\ParameterLocale;
-use LaravelLang\Routes\Middlewares\ParameterRedirectLocale;
-use LaravelLang\Routes\Middlewares\SessionLocale;
+use LaravelLang\Routes\Middlewares\LocalizationByCookie;
+use LaravelLang\Routes\Middlewares\LocalizationByHeader;
+use LaravelLang\Routes\Middlewares\LocalizationByParameter;
+use LaravelLang\Routes\Middlewares\LocalizationByParameterWithRedirect;
+use LaravelLang\Routes\Middlewares\LocalizationBySession;
 use Tests\Constants\LocaleValue;
 
 use function app;
@@ -24,31 +24,31 @@ trait Routes
             ->middleware('web')
             ->group(function () {
                 app('router')
-                    ->middleware(ParameterLocale::class)
+                    ->middleware(LocalizationByParameter::class)
                     ->get('path/{foo}/{locale?}', $this->jsonResponse())
                     ->name('via.parameter');
 
                 app('router')
-                    ->middleware(ParameterRedirectLocale::class)
+                    ->middleware(LocalizationByParameterWithRedirect::class)
                     ->get('redirect/{foo}/{locale?}', $this->jsonResponse())
                     ->name('via.parameter.redirect');
 
                 app('router')
-                    ->middleware(ParameterRedirectLocale::class)
+                    ->middleware(LocalizationByParameterWithRedirect::class)
                     ->get('not-named/redirect/{foo}/{locale?}', $this->jsonResponse());
 
                 app('router')
-                    ->middleware(HeaderLocale::class)
+                    ->middleware(LocalizationByHeader::class)
                     ->get('header/{foo}', $this->jsonResponse())
                     ->name('via.header');
 
                 app('router')
-                    ->middleware(CookiesLocale::class)
+                    ->middleware(LocalizationByCookie::class)
                     ->get('cookie/{foo}', $this->jsonResponse())
                     ->name('via.cookie');
 
                 app('router')
-                    ->middleware(SessionLocale::class)
+                    ->middleware(LocalizationBySession::class)
                     ->get('session/{foo}', $this->jsonResponse())
                     ->name('via.session');
             });

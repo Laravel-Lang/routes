@@ -13,7 +13,7 @@ use LaravelLang\Routes\Concerns\KeyNames;
 use function array_merge;
 use function response;
 
-class ParameterRedirectLocale extends Middleware
+class LocalizationByParameterWithRedirect extends Middleware
 {
     use KeyNames;
 
