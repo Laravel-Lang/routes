@@ -8,22 +8,31 @@ use Tests\Constants\LocaleValue;
 use function Pest\Laravel\withCookie;
 
 test('main locale', function (string $locale) {
+    $time = time();
+
     withCookie(Config::shared()->routes->names->cookie, $locale)
-        ->getJson(route('via.cookie'))
+        ->getJson(route('via.cookie', compact('time')))
         ->assertSuccessful()
-        ->assertJsonPath('message', LocaleValue::TranslationFrench);
+        ->assertJsonPath('message', LocaleValue::TranslationFrench)
+        ->assertJsonPath('time', $time);
 })->with('main-locales');
 
 test('aliased locale', function (string $locale) {
+    $time = time();
+
     withCookie(Config::shared()->routes->names->cookie, $locale)
-        ->getJson(route('via.cookie'))
+        ->getJson(route('via.cookie', compact('time')))
         ->assertSuccessful()
-        ->assertJsonPath('message', LocaleValue::TranslationGerman);
+        ->assertJsonPath('message', LocaleValue::TranslationGerman)
+        ->assertJsonPath('time', $time);
 })->with('aliased-locales');
 
 test('empty locale', function (int|string|null $locale) {
+    $time = time();
+
     withCookie(Config::shared()->routes->names->cookie, $locale)
-        ->getJson(route('via.cookie'))
+        ->getJson(route('via.cookie', compact('time')))
         ->assertSuccessful()
-        ->assertJsonPath('message', LocaleValue::TranslationFrench);
+        ->assertJsonPath('message', LocaleValue::TranslationFrench)
+        ->assertJsonPath('time', $time);
 })->with('empty-locales');
