@@ -28,12 +28,17 @@
     },
     "require": {
         "php": "^8.2",
+        "dragon-code/support": "^6.13",
+        "illuminate/config": "^10.0 || ^11.0",
+        "illuminate/http": "^10.0 || ^11.0",
         "illuminate/support": "^10.0 || ^11.0",
+        "laravel-lang/config": "^1.1",
         "laravel-lang/locales": "^2.8"
     },
     "require-dev": {
         "orchestra/testbench": "^8.23 || ^9.1",
         "pestphp/pest": "^2.34",
+        "pestphp/pest-plugin-laravel": "^2.4",
         "symfony/var-dumper": "^6.0 || ^7.0"
     },
     "minimum-stability": "stable",

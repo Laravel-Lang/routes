@@ -11,7 +11,7 @@
 
 Localization by:
 
-- [ ] route parameter
+- [x] route parameter (+ redirect)
 - [ ] X-header
 - [ ] cookies
 - [ ] session data ?
