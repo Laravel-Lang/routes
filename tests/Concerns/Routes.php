@@ -25,40 +25,39 @@ trait Routes
             ->group(function () {
                 app('router')
                     ->middleware(ParameterLocale::class)
-                    ->get('path/{time}/{locale?}', $this->jsonResponse())
+                    ->get('path/{foo}/{locale?}', $this->jsonResponse())
                     ->name('via.parameter');
 
                 app('router')
                     ->middleware(ParameterRedirectLocale::class)
-                    ->get('redirect/{time}/{locale?}', $this->jsonResponse())
+                    ->get('redirect/{foo}/{locale?}', $this->jsonResponse())
                     ->name('via.parameter.redirect');
 
                 app('router')
                     ->middleware(ParameterRedirectLocale::class)
-                    ->get('not-named/redirect/{time}/{locale?}', $this->jsonResponse());
+                    ->get('not-named/redirect/{foo}/{locale?}', $this->jsonResponse());
 
                 app('router')
                     ->middleware(HeaderLocale::class)
-                    ->get('header/{time}', $this->jsonResponse())
+                    ->get('header/{foo}', $this->jsonResponse())
                     ->name('via.header');
 
                 app('router')
                     ->middleware(CookiesLocale::class)
-                    ->get('cookie/{time}', $this->jsonResponse())
+                    ->get('cookie/{foo}', $this->jsonResponse())
                     ->name('via.cookie');
 
                 app('router')
                     ->middleware(SessionLocale::class)
-                    ->get('session/{time}', $this->jsonResponse())
+                    ->get('session/{foo}', $this->jsonResponse())
                     ->name('via.session');
             });
     }
 
     protected function jsonResponse(): Closure
     {
-        return fn (int $time) => response()->json([
-            'message' => __(LocaleValue::TranslationKey),
-            'time'    => $time,
+        return fn (string $foo) => response()->json([
+            $foo => __(LocaleValue::TranslationKey),
         ]);
     }
 }

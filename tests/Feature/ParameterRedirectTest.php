@@ -7,58 +7,55 @@ use Tests\Constants\LocaleValue;
 use function Pest\Laravel\getJson;
 
 test('main locale', function (string $locale) {
-    $time = time();
+    $foo = 'test';
 
-    getJson(route('via.parameter.redirect', compact('time', 'locale')))
+    getJson(route('via.parameter.redirect', compact('foo', 'locale')))
         ->assertSuccessful()
-        ->assertJsonPath('message', LocaleValue::TranslationFrench)
-        ->assertJsonPath('time', $time);
+        ->assertJsonPath($foo, LocaleValue::TranslationFrench);
 })->with('main-locales');
 
 test('aliased locale', function (string $locale) {
-    $time = time();
+    $foo = 'test';
 
-    getJson(route('via.parameter.redirect', compact('time', 'locale')))
+    getJson(route('via.parameter.redirect', compact('foo', 'locale')))
         ->assertSuccessful()
-        ->assertJsonPath('message', LocaleValue::TranslationGerman)
-        ->assertJsonPath('time', $time);
+        ->assertJsonPath($foo, LocaleValue::TranslationGerman);
 })->with('aliased-locales');
 
 test('empty locale', function (int|string|null $locale) {
-    $time = time();
+    $foo = 'test';
 
-    getJson(route('via.parameter.redirect', compact('time', 'locale')))
+    getJson(route('via.parameter.redirect', compact('foo', 'locale')))
         ->assertRedirectToRoute('via.parameter.redirect', [
             'locale' => LocaleValue::LocaleMain,
-            'time'   => $time,
+            'foo'    => $foo,
         ]);
 })->with('empty-locales');
 
 test('uninstalled locale', function (string $locale) {
-    $time = time();
+    $foo = 'test';
 
-    getJson(route('via.parameter.redirect', compact('time', 'locale')))
+    getJson(route('via.parameter.redirect', compact('foo', 'locale')))
         ->assertRedirectToRoute('via.parameter.redirect', [
             'locale' => LocaleValue::LocaleMain,
-            'time'   => $time,
+            'foo'    => $foo,
         ]);
 })->with('uninstalled-locales');
 
 test('unknown locale', function (int|string $locale) {
-    $time = time();
+    $foo = 'test';
 
-    getJson(route('via.parameter.redirect', compact('time', 'locale')))
+    getJson(route('via.parameter.redirect', compact('foo', 'locale')))
         ->assertRedirectToRoute('via.parameter.redirect', [
             'locale' => LocaleValue::LocaleMain,
-            'time'   => $time,
+            'foo'    => $foo,
         ]);
 })->with('unknown-locales');
 
 test('not named', function (int|string|null $locale) {
-    $time = time();
+    $foo = 'test';
 
-    getJson(url('not-named/redirect/' . $time . '/' . $locale))
+    getJson(url('not-named/redirect/' . $foo . '/' . $locale))
         ->assertSuccessful()
-        ->assertJsonPath('message', LocaleValue::TranslationFrench)
-        ->assertJsonPath('time', $time);
+        ->assertJsonPath($foo, LocaleValue::TranslationFrench);
 })->with('empty-locales');
