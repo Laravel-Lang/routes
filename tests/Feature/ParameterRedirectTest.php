@@ -34,6 +34,26 @@ test('empty locale', function (int|string|null $locale) {
         ]);
 })->with('empty-locales');
 
+test('uninstalled locale', function (string $locale) {
+    $time = time();
+
+    getJson(route('via.parameter.redirect', compact('time', 'locale')))
+        ->assertRedirectToRoute('via.parameter.redirect', [
+            'locale' => LocaleValue::LocaleMain,
+            'time'   => $time,
+        ]);
+})->with('uninstalled-locales');
+
+test('unknown locale', function (int|string $locale) {
+    $time = time();
+
+    getJson(route('via.parameter.redirect', compact('time', 'locale')))
+        ->assertRedirectToRoute('via.parameter.redirect', [
+            'locale' => LocaleValue::LocaleMain,
+            'time'   => $time,
+        ]);
+})->with('unknown-locales');
+
 test('not named', function (int|string|null $locale) {
     $time = time();
 

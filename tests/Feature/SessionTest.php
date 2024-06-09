@@ -36,3 +36,23 @@ test('empty locale', function (int|string|null $locale) {
         ->assertJsonPath('message', LocaleValue::TranslationFrench)
         ->assertJsonPath('time', $time);
 })->with('empty-locales');
+
+test('uninstalled locale', function (string $locale) {
+    $time = time();
+
+    withSession([Config::shared()->routes->names->session => $locale])
+        ->getJson(route('via.session', compact('time')))
+        ->assertSuccessful()
+        ->assertJsonPath('message', LocaleValue::TranslationFrench)
+        ->assertJsonPath('time', $time);
+})->with('uninstalled-locales');
+
+test('unknown locale', function (int|string $locale) {
+    $time = time();
+
+    withSession([Config::shared()->routes->names->session => $locale])
+        ->getJson(route('via.session', compact('time')))
+        ->assertSuccessful()
+        ->assertJsonPath('message', LocaleValue::TranslationFrench)
+        ->assertJsonPath('time', $time);
+})->with('unknown-locales');

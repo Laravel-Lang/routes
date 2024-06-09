@@ -19,7 +19,7 @@ class ParameterRedirectLocale extends Middleware
 
     public function __invoke(Request $request, Closure $next)
     {
-        if ($this->doesntHaveParameter($request) && ($name = $this->routeName($request))) {
+        if ($this->invalidParameter($request) && ($name = $this->routeName($request))) {
             return $this->redirect($name, $this->parameters($request));
         }
 
@@ -31,10 +31,11 @@ class ParameterRedirectLocale extends Middleware
         return $request->route()?->parameter($this->names()->parameter);
     }
 
-    protected function doesntHaveParameter(Request $request): ?bool
+    protected function invalidParameter(Request $request): ?bool
     {
         return ! $request->route()?->hasParameter($this->names()->parameter)
-            || ! $this->trim($request->route()->parameter($this->names()->parameter));
+            || ! $this->trim($this->detect($request))
+            || ! $this->isInstalled($this->detect($request));
     }
 
     protected function parameters(Request $request): array
@@ -57,5 +58,10 @@ class ParameterRedirectLocale extends Middleware
     protected function defaultLocale(): string
     {
         return Locales::getDefault()->code;
+    }
+
+    protected function isInstalled(string|int|float|bool|null $parameter): bool
+    {
+        return Locales::isInstalled((string) $parameter);
     }
 }

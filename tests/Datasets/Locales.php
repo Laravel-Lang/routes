@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
+use LaravelLang\LocaleList\Locale;
 use Tests\Constants\LocaleValue;
 
 dataset('main-locales', [
-    LocaleValue::TranslationFrench,
-    LocaleValue::LocaleUninstalled,
-    LocaleValue::LocaleIncorrect,
+    LocaleValue::LocaleMain,
 ]);
 
 dataset('aliased-locales', [
@@ -22,10 +21,16 @@ dataset('empty-locales', [
     0,
 ]);
 
-// TODO: Add tests for that
+dataset('uninstalled-locales', [
+    Locale::Assamese->value,
+    Locale::NorwegianBokmal->value,
+    Locale::Bulgarian->value,
+]);
+
 dataset('unknown-locales', [
     'foo',
     'bar',
     'qwerty',
     'en_US',
+    123,
 ]);
