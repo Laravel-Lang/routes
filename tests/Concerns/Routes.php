@@ -25,31 +25,31 @@ trait Routes
             ->group(function () {
                 app('router')
                     ->middleware(ParameterLocale::class)
-                    ->get('path/{locale?}', $this->jsonResponse())
+                    ->get('path/{time}/{locale?}', $this->jsonResponse())
                     ->name('via.parameter');
 
                 app('router')
                     ->middleware(ParameterRedirectLocale::class)
-                    ->get('redirect/{locale?}', $this->jsonResponse())
+                    ->get('redirect/{time}/{locale?}', $this->jsonResponse())
                     ->name('via.parameter.redirect');
 
                 app('router')
                     ->middleware(ParameterRedirectLocale::class)
-                    ->get('not-named/redirect/{locale?}', $this->jsonResponse());
+                    ->get('not-named/redirect/{time}/{locale?}', $this->jsonResponse());
 
                 app('router')
                     ->middleware(HeaderLocale::class)
-                    ->get('header', $this->jsonResponse())
+                    ->get('header/{time}', $this->jsonResponse())
                     ->name('via.header');
 
                 app('router')
                     ->middleware(CookiesLocale::class)
-                    ->get('cookie', $this->jsonResponse())
+                    ->get('cookie/{time}', $this->jsonResponse())
                     ->name('via.cookie');
 
                 app('router')
                     ->middleware(SessionLocale::class)
-                    ->get('session', $this->jsonResponse())
+                    ->get('session/{time}', $this->jsonResponse())
                     ->name('via.session');
             });
     }
@@ -60,8 +60,9 @@ trait Routes
         //    $request->route()->parameter('locale'),
         // ]);
 
-        return fn () => response()->json([
+        return fn (int $time) => response()->json([
             'message' => __(LocaleValue::TranslationKey),
+            'time'    => $time,
         ]);
     }
 }
