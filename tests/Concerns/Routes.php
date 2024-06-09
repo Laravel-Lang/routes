@@ -56,10 +56,6 @@ trait Routes
 
     protected function jsonResponse(): Closure
     {
-        // return fn (Request $request) => response()->json([
-        //    $request->route()->parameter('locale'),
-        // ]);
-
         return fn (int $time) => response()->json([
             'message' => __(LocaleValue::TranslationKey),
             'time'    => $time,
