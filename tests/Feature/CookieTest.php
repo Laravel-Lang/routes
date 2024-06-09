@@ -30,7 +30,7 @@ test('aliased locale', function (string $locale) {
 test('empty locale', function (int|string|null $locale) {
     $time = time();
 
-    withCookie(Config::shared()->routes->names->cookie, $locale)
+    withCookie(Config::shared()->routes->names->cookie, (string) $locale)
         ->getJson(route('via.cookie', compact('time')))
         ->assertSuccessful()
         ->assertJsonPath('message', LocaleValue::TranslationFrench)
