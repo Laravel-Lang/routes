@@ -18,12 +18,12 @@ test('aliased locale', function (string $locale) {
         ->assertJsonPath('message', LocaleValue::TranslationGerman);
 })->with('aliased-locales');
 
-test('empty locale', function (string|int|null $locale) {
+test('empty locale', function (int|string|null $locale) {
     getJson(route('via.parameter.redirect', compact('locale')))
         ->assertRedirectToRoute('via.parameter.redirect', ['locale' => LocaleValue::LocaleMain]);
 })->with('empty-locales');
 
-test('not named', function (string|int|null $locale) {
+test('not named', function (int|string|null $locale) {
     getJson(url('not-named/redirect/' . $locale))
         ->assertSuccessful()
         ->assertJsonPath('message', LocaleValue::TranslationFrench);

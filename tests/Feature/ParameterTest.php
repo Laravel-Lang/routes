@@ -18,7 +18,7 @@ test('aliased locale', function (string $locale) {
         ->assertJsonPath('message', LocaleValue::TranslationGerman);
 })->with('aliased-locales');
 
-test('empty locale', function (string|int|null $locale) {
+test('empty locale', function (int|string|null $locale) {
     getJson(route('via.parameter', compact('locale')))
         ->assertSuccessful()
         ->assertJsonPath('message', LocaleValue::TranslationFrench);
