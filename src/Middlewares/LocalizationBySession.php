@@ -6,10 +6,10 @@ namespace LaravelLang\Routes\Middlewares;
 
 use Illuminate\Http\Request;
 
-class HeaderLocale extends Middleware
+class LocalizationBySession extends Middleware
 {
     protected function detect(Request $request): bool|float|int|string|null
     {
-        return $request->header($this->names()->header);
+        return $request->getSession()->get($this->names()->session);
     }
 }

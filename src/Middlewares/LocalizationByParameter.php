@@ -6,10 +6,10 @@ namespace LaravelLang\Routes\Middlewares;
 
 use Illuminate\Http\Request;
 
-class CookiesLocale extends Middleware
+class LocalizationByParameter extends Middleware
 {
     protected function detect(Request $request): bool|float|int|string|null
     {
-        return $request->cookie($this->names()->cookie);
+        return $request->route()->parameter($this->names()->parameter);
     }
 }

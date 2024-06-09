@@ -6,10 +6,10 @@ namespace LaravelLang\Routes\Middlewares;
 
 use Illuminate\Http\Request;
 
-class SessionLocale extends Middleware
+class LocalizationByCookie extends Middleware
 {
     protected function detect(Request $request): bool|float|int|string|null
     {
-        return $request->getSession()->get($this->names()->session);
+        return $request->cookie($this->names()->cookie);
     }
 }
