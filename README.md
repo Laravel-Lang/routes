@@ -12,7 +12,7 @@
 Localization by:
 
 - [x] route parameter (+ redirect)
-- [ ] X-header
+- [x] header
 - [ ] cookies
 - [ ] session data ?
 

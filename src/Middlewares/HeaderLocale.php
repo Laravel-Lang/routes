@@ -6,7 +6,7 @@ namespace LaravelLang\Routes\Middlewares;
 
 use Illuminate\Http\Request;
 
-class XHeaderLocale extends Middleware
+class HeaderLocale extends Middleware
 {
     protected function detect(Request $request): ?string
     {
