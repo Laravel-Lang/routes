@@ -1,0 +1,17 @@
+name: Release Drafter
+
+on:
+    push:
+        branches:
+            - main
+    release:
+        types:
+            - published
+            - unpublished
+            - released
+            - prereleased
+    workflow_dispatch:
+
+jobs:
+    Update:
+        uses: Laravel-Lang/.github/.github/workflows/release-drafter.yml@main
