@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class HeaderLocale extends Middleware
 {
-    protected function detect(Request $request): ?string
+    protected function detect(Request $request): string|int|float|bool|null
     {
         return $request->header($this->names()->header);
     }

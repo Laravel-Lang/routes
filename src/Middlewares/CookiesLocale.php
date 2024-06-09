@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class CookiesLocale extends Middleware
 {
-    protected function detect(Request $request): ?string
+    protected function detect(Request $request): string|int|float|bool|null
     {
         return $request->cookie($this->names()->cookie);
     }

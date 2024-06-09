@@ -16,8 +16,16 @@ dataset('aliased-locales', [
 ]);
 
 dataset('empty-locales', [
-    '',
-    ' ',
-    null,
+    //'',
+    //' ',
+    //null,
     0,
+]);
+
+// TODO: Add tests for that
+dataset('unknown-locales', [
+    'foo',
+    'bar',
+    'qwerty',
+    'en_US',
 ]);

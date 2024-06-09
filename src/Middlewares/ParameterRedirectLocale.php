@@ -26,7 +26,7 @@ class ParameterRedirectLocale extends Middleware
         return parent::__invoke($request, $next);
     }
 
-    protected function detect(Request $request): ?string
+    protected function detect(Request $request): string|int|float|bool|null
     {
         return $request->route()?->parameter($this->names()->parameter);
     }
