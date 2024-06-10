@@ -54,11 +54,11 @@ trait Routes
 
                 app('router')
                     ->middleware([
-                        // LocalizationByParameter::class,
+                        LocalizationByParameter::class,
                         LocalizationByParameterWithRedirect::class,
-                        // LocalizationByHeader::class,
-                        // LocalizationByCookie::class,
-                        // LocalizationBySession::class,
+                        LocalizationByHeader::class,
+                        LocalizationByCookie::class,
+                        LocalizationBySession::class,
                     ])
                     ->get('clean/{foo}', $this->jsonResponse())
                     ->name('clean');
