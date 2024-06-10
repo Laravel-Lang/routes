@@ -33,9 +33,14 @@ class LocalizationByParameterWithRedirect extends Middleware
 
     protected function invalidParameter(Request $request): ?bool
     {
-        return ! $request->route()?->hasParameter($this->names()->parameter)
+        return ! $this->hasParameter($request)
             || ! $this->trim($this->detect($request))
             || ! $this->isInstalled($this->detect($request));
+    }
+
+    protected function hasParameter(Request $request): bool
+    {
+        return (bool) $request->route()?->hasParameter($this->names()->parameter);
     }
 
     protected function parameters(Request $request): array

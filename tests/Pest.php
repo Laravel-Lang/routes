@@ -1,7 +1,7 @@
 <?php
 
-uses(Tests\TestCase::class)->in('Feature');
+use Illuminate\Support\Facades\Event;
 
-// expect()->extend('toBeOne', function () {
-//    return $this->toBe(1);
-// });
+uses(Tests\TestCase::class)
+    ->beforeEach(fn () => Event::fake())
+    ->in('Feature');

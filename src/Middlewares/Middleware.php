@@ -6,11 +6,12 @@ namespace LaravelLang\Routes\Middlewares;
 
 use Closure;
 use Illuminate\Http\Request;
+use LaravelLang\Locales\Data\LocaleData;
+use LaravelLang\Locales\Facades\Locales;
 use LaravelLang\Routes\Concerns\KeyNames;
-use LaravelLang\Routes\Services\Resolver;
+use LaravelLang\Routes\Events\LocaleHasBeenSetEvent;
 
 use function app;
-use function is_string;
 use function trim;
 
 abstract class Middleware
@@ -22,17 +23,20 @@ abstract class Middleware
     public function __invoke(Request $request, Closure $next)
     {
         if ($locale = $this->getLocale($request)) {
-            $this->setLocale($locale);
+            $this->setLocale($locale->code);
+            $this->event($locale);
         }
 
         return $next($request);
     }
 
-    protected function getLocale(Request $request): string
+    protected function getLocale(Request $request): ?LocaleData
     {
-        return Resolver::locale(
-            $this->detect($request)
-        );
+        if ($locale = $this->trim($this->detect($request))) {
+            return Locales::get($locale);
+        }
+
+        return null;
     }
 
     protected function setLocale(string $locale): void
@@ -40,8 +44,13 @@ abstract class Middleware
         app()->setLocale($locale);
     }
 
-    protected function trim(?string $locale): ?string
+    protected function event(LocaleData $locale): void
     {
-        return is_string($locale) ? trim($locale) : null;
+        LocaleHasBeenSetEvent::dispatch($locale);
+    }
+
+    protected function trim(bool|float|int|string|null $locale): string
+    {
+        return trim((string) $locale);
     }
 }
