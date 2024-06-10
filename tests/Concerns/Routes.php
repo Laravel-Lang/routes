@@ -51,6 +51,17 @@ trait Routes
                     ->middleware(LocalizationBySession::class)
                     ->get('session/{foo}', $this->jsonResponse())
                     ->name('via.session');
+
+                app('router')
+                    ->middleware([
+                        // LocalizationByParameter::class,
+                        LocalizationByParameterWithRedirect::class,
+                        // LocalizationByHeader::class,
+                        // LocalizationByCookie::class,
+                        // LocalizationBySession::class,
+                    ])
+                    ->get('clean/{foo}', $this->jsonResponse())
+                    ->name('clean');
             });
     }
 
