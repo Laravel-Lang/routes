@@ -7,10 +7,12 @@ namespace LaravelLang\Routes\Middlewares;
 use Closure;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use LaravelLang\Config\Facades\Config;
 use LaravelLang\Locales\Facades\Locales;
 use LaravelLang\Routes\Concerns\KeyNames;
 
 use function array_merge;
+use function in_array;
 use function response;
 
 class LocalizationByParameterWithRedirect extends Middleware
@@ -19,7 +21,7 @@ class LocalizationByParameterWithRedirect extends Middleware
 
     public function __invoke(Request $request, Closure $next)
     {
-        if ($this->invalidParameter($request) && ($name = $this->routeName($request))) {
+        if ($this->present($request) && $this->invalidParameter($request) && ($name = $this->routeName($request))) {
             return $this->redirect($name, $this->parameters($request));
         }
 
@@ -41,6 +43,11 @@ class LocalizationByParameterWithRedirect extends Middleware
     protected function hasParameter(Request $request): bool
     {
         return (bool) $request->route()?->hasParameter($this->names()->parameter);
+    }
+
+    protected function present(Request $request): bool
+    {
+        return in_array(Config::shared()->routes->names->parameter, $request->route()->parameterNames(), true);
     }
 
     protected function parameters(Request $request): array
