@@ -10,6 +10,8 @@ use LaravelLang\Routes\Concerns\KeyNames;
 use LaravelLang\Routes\Services\Resolver;
 
 use function app;
+use function is_string;
+use function trim;
 
 abstract class Middleware
 {
