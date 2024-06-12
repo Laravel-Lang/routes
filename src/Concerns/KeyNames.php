@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaravelLang\Routes\Concerns;
 
-use LaravelLang\Config\Data\RouteNameData;
+use LaravelLang\Config\Data\Shared\RouteNameData;
 use LaravelLang\Config\Facades\Config;
 
 trait KeyNames
