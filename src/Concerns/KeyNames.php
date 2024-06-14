@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace LaravelLang\Routes\Concerns;
 
 use LaravelLang\Config\Data\Shared\RouteNameData;
-use LaravelLang\Config\Facades\Config;
+use LaravelLang\Routes\Helpers\Name;
 
 trait KeyNames
 {
     public function names(): RouteNameData
     {
-        return Config::shared()->routes->names;
+        return Name::all();
     }
 }

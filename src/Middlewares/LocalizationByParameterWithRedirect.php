@@ -7,7 +7,6 @@ namespace LaravelLang\Routes\Middlewares;
 use Closure;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use LaravelLang\Config\Facades\Config;
 use LaravelLang\Locales\Facades\Locales;
 use LaravelLang\Routes\Concerns\KeyNames;
 
@@ -47,7 +46,7 @@ class LocalizationByParameterWithRedirect extends Middleware
 
     protected function present(Request $request): bool
     {
-        return in_array(Config::shared()->routes->names->parameter, $request->route()->parameterNames(), true);
+        return in_array($this->names()->parameter, $request->route()->parameterNames(), true);
     }
 
     protected function parameters(Request $request): array
