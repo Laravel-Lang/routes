@@ -30,7 +30,7 @@ abstract class TestCase extends BaseTestCase
 
         $config->set('app.locale', LocaleValue::LocaleMain);
 
-        $config->set(Name::Shared->value . '.aliases', [
+        $config->set(Name::Shared() . '.aliases', [
             LocaleValue::LocaleAliasParent => LocaleValue::LocaleAlias,
         ]);
     }
