@@ -27,7 +27,7 @@ abstract class Middleware
             $this->event($locale);
         }
 
-        return $next($request);
+        return $next($this->forgetParameter($request));
     }
 
     protected function getLocale(Request $request): ?LocaleData
@@ -52,5 +52,14 @@ abstract class Middleware
     protected function trim(bool|float|int|string|null $locale): string
     {
         return trim((string) $locale);
+    }
+
+    protected function forgetParameter(Request $request): Request
+    {
+        $request->route()->forgetParameter(
+            $this->names()->parameter
+        );
+
+        return $request;
     }
 }
