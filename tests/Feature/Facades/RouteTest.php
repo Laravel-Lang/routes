@@ -2,9 +2,18 @@
 
 declare(strict_types=1);
 
-use LaravelLang\Routes\Helpers\Name;
+use LaravelLang\Routes\Helpers\Route as RouteName;
+use Tests\Constants\LocaleValue;
 
 test('group', function () {
-    expect(app('router')->has('via.group'))->toBeTrue();
-    expect(app('router')->has(Name::parameter() . '.via.group'))->toBeTrue();
+    $foo = 'test';
+
+    expect(route('via.group', compact('foo')))
+        ->toBeString()
+        ->toBe('http://localhost/group/test');
+
+    expect(route(RouteName::prefix() . 'via.group', [
+        'locale' => LocaleValue::LocaleMain,
+        'foo'    => $foo,
+    ]))->toBeString()->toBe('http://localhost/fr/group/test');
 });

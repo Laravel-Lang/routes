@@ -7,7 +7,7 @@ namespace LaravelLang\Routes\Concerns;
 use LaravelLang\Config\Data\Shared\RouteNameData;
 use LaravelLang\Routes\Helpers\Name;
 
-trait KeyNames
+trait RouteParameters
 {
     public function names(): RouteNameData
     {

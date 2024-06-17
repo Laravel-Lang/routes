@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Http\Request;
 use LaravelLang\Locales\Data\LocaleData;
 use LaravelLang\Locales\Facades\Locales;
-use LaravelLang\Routes\Concerns\KeyNames;
+use LaravelLang\Routes\Concerns\RouteParameters;
 use LaravelLang\Routes\Events\LocaleHasBeenSetEvent;
 
 use function app;
@@ -16,7 +16,7 @@ use function trim;
 
 abstract class Middleware
 {
-    use KeyNames;
+    use RouteParameters;
 
     abstract protected function detect(Request $request): bool|float|int|string|null;
 
@@ -27,7 +27,7 @@ abstract class Middleware
             $this->event($locale);
         }
 
-        return $next($request);
+        return $next($this->forgetParameter($request));
     }
 
     protected function getLocale(Request $request): ?LocaleData
@@ -52,5 +52,14 @@ abstract class Middleware
     protected function trim(bool|float|int|string|null $locale): string
     {
         return trim((string) $locale);
+    }
+
+    protected function forgetParameter(Request $request): Request
+    {
+        $request->route()->forgetParameter(
+            $this->names()->parameter
+        );
+
+        return $request;
     }
 }

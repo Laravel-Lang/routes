@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use LaravelLang\Locales\Facades\Locales;
-use LaravelLang\Routes\Concerns\KeyNames;
+use LaravelLang\Routes\Concerns\RouteParameters;
 
 use function array_merge;
 use function in_array;
@@ -16,7 +16,7 @@ use function response;
 
 class LocalizationByParameterWithRedirect extends Middleware
 {
-    use KeyNames;
+    use RouteParameters;
 
     public function __invoke(Request $request, Closure $next)
     {

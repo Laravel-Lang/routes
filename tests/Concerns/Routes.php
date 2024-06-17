@@ -68,7 +68,7 @@ trait Routes
         LocalizationRoute::group(function () {
             app('router')
                 ->middleware('web')
-                ->get('grouped', $this->jsonResponse())
+                ->get('group/{foo}', $this->jsonResponse())
                 ->name('via.group');
         });
     }
