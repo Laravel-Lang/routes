@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use LaravelLang\Config\Enums\Name;
 use LaravelLang\Routes\Helpers\Route as RouteName;
 use Tests\Constants\LocaleValue;
 
@@ -15,7 +16,22 @@ test('main without prefix', function () {
         ->assertJsonPath($foo, LocaleValue::TranslationFrench);
 });
 
-test('main locale', function (string $locale) {
+test('main locale with enabled redirect', function (string $locale) {
+    config()->set(Name::Shared() . '.routes.redirect_default', true);
+
+    $foo = 'test';
+
+    getJson(route(RouteName::prefix() . 'via.group.macro', compact('foo', 'locale')))
+        ->assertRedirectToRoute('via.group.macro', [
+            'foo' => $foo,
+        ]);
+
+    assertEventNotDispatched();
+})->with('main-locales');
+
+test('main locale with disabled redirect', function (string $locale) {
+    config()->set(Name::Shared() . '.routes.redirect_default', false);
+
     $foo = 'test';
 
     getJson(route(RouteName::prefix() . 'via.group.macro', compact('foo', 'locale')))
