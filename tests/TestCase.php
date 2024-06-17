@@ -5,6 +5,7 @@ namespace Tests;
 use LaravelLang\Config\Enums\Name;
 use LaravelLang\Config\ServiceProvider as ConfigServiceProvider;
 use LaravelLang\Locales\ServiceProvider as LocalesServiceProvider;
+use LaravelLang\Routes\ServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Tests\Concerns\Locales;
 use Tests\Concerns\Routes;
@@ -20,6 +21,7 @@ abstract class TestCase extends BaseTestCase
         return [
             LocalesServiceProvider::class,
             ConfigServiceProvider::class,
+            ServiceProvider::class,
         ];
     }
 

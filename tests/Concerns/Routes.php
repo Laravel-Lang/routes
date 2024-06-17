@@ -65,11 +65,18 @@ trait Routes
                     ->name('clean');
             });
 
+        app('router')->localizedGroup(function () {
+            app('router')
+                ->middleware('web')
+                ->get('group/macro/{foo}', $this->jsonResponse())
+                ->name('via.group.macro');
+        });
+
         LocalizationRoute::group(function () {
             app('router')
                 ->middleware('web')
-                ->get('group/{foo}', $this->jsonResponse())
-                ->name('via.group');
+                ->get('group/facade/{foo}', $this->jsonResponse())
+                ->name('via.group.facade');
         });
     }
 

@@ -66,6 +66,13 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaravelLang\\Routes\\ServiceProvider"
+            ]
+        }
+    },
     "scripts": {
         "test": "vendor/bin/pest --parallel"
     }

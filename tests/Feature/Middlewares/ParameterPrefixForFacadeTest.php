@@ -10,7 +10,7 @@ use function Pest\Laravel\getJson;
 test('main without prefix', function () {
     $foo = 'test';
 
-    getJson(route('via.group', compact('foo')))
+    getJson(route('via.group.facade', compact('foo')))
         ->assertSuccessful()
         ->assertJsonPath($foo, LocaleValue::TranslationFrench);
 });
@@ -18,7 +18,7 @@ test('main without prefix', function () {
 test('main locale', function (string $locale) {
     $foo = 'test';
 
-    getJson(route(RouteName::prefix() . 'via.group', compact('foo', 'locale')))
+    getJson(route(RouteName::prefix() . 'via.group.facade', compact('foo', 'locale')))
         ->assertSuccessful()
         ->assertJsonPath($foo, LocaleValue::TranslationFrench);
 
@@ -28,7 +28,7 @@ test('main locale', function (string $locale) {
 test('aliased locale', function (string $locale) {
     $foo = 'test';
 
-    getJson(route(RouteName::prefix() . 'via.group', compact('foo', 'locale')))
+    getJson(route(RouteName::prefix() . 'via.group.facade', compact('foo', 'locale')))
         ->assertSuccessful()
         ->assertJsonPath($foo, LocaleValue::TranslationGerman);
 
@@ -38,8 +38,8 @@ test('aliased locale', function (string $locale) {
 test('uninstalled locale', function (string $locale) {
     $foo = 'test';
 
-    getJson(route(RouteName::prefix() . 'via.group', compact('foo', 'locale')))
-        ->assertRedirectToRoute('via.group', [
+    getJson(route(RouteName::prefix() . 'via.group.facade', compact('foo', 'locale')))
+        ->assertRedirectToRoute('via.group.facade', [
             'foo' => $foo,
         ]);
 
@@ -49,8 +49,8 @@ test('uninstalled locale', function (string $locale) {
 test('unknown locale', function (int|string $locale) {
     $foo = 'test';
 
-    getJson(route(RouteName::prefix() . 'via.group', compact('foo', 'locale')))
-        ->assertRedirectToRoute('via.group', [
+    getJson(route(RouteName::prefix() . 'via.group.facade', compact('foo', 'locale')))
+        ->assertRedirectToRoute('via.group.facade', [
             'foo' => $foo,
         ]);
 
