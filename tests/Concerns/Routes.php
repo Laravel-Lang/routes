@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Concerns;
 
 use Closure;
+use LaravelLang\Routes\Facades\LocalizationRoute;
 use LaravelLang\Routes\Middlewares\LocalizationByCookie;
 use LaravelLang\Routes\Middlewares\LocalizationByHeader;
 use LaravelLang\Routes\Middlewares\LocalizationByParameter;
@@ -63,6 +64,13 @@ trait Routes
                     ->get('clean/{foo}', $this->jsonResponse())
                     ->name('clean');
             });
+
+        LocalizationRoute::group(function () {
+            app('router')
+                ->middleware('web')
+                ->get('group/{foo}', $this->jsonResponse())
+                ->name('via.group');
+        });
     }
 
     protected function jsonResponse(): Closure

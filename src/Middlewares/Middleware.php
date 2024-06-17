@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Http\Request;
 use LaravelLang\Locales\Data\LocaleData;
 use LaravelLang\Locales\Facades\Locales;
-use LaravelLang\Routes\Concerns\KeyNames;
+use LaravelLang\Routes\Concerns\RouteParameters;
 use LaravelLang\Routes\Events\LocaleHasBeenSetEvent;
 
 use function app;
@@ -16,7 +16,7 @@ use function trim;
 
 abstract class Middleware
 {
-    use KeyNames;
+    use RouteParameters;
 
     abstract protected function detect(Request $request): bool|float|int|string|null;
 
