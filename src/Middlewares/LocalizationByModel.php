@@ -15,11 +15,16 @@ class LocalizationByModel extends Middleware
 
     protected function detect(Request $request): bool|float|int|string|null
     {
-        if ($this->user($request)?->hasAttribute($this->attribute())) {
-            return $this->user($request)->getAttribute($this->attribute());
+        if ($this->has($user = $this->user($request))) {
+            return $user->getAttribute($this->attribute());
         }
 
         return null;
+    }
+
+    protected function has(?Model $user): bool
+    {
+        return $user && $this->hasAttribute($user);
     }
 
     protected function user(Request $request): ?Model
@@ -30,5 +35,14 @@ class LocalizationByModel extends Middleware
     protected function attribute(): string
     {
         return $this->names()->column;
+    }
+
+    protected function hasAttribute(Model $user): bool
+    {
+        if (method_exists($user, 'hasAttribute')) {
+            return $user->hasAttribute($this->attribute());
+        }
+
+        return array_key_exists($this->attribute(), $user->getAttributes());
     }
 }
