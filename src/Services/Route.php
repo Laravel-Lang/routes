@@ -10,6 +10,7 @@ use LaravelLang\Routes\Concerns\RouteParameters;
 use LaravelLang\Routes\Helpers\Route as RouteName;
 use LaravelLang\Routes\Middlewares\LocalizationByCookie;
 use LaravelLang\Routes\Middlewares\LocalizationByHeader;
+use LaravelLang\Routes\Middlewares\LocalizationByModel;
 use LaravelLang\Routes\Middlewares\LocalizationByParameterPrefix;
 use LaravelLang\Routes\Middlewares\LocalizationBySession;
 
@@ -23,6 +24,7 @@ class Route
             LocalizationByCookie::class,
             LocalizationByHeader::class,
             LocalizationBySession::class,
+            LocalizationByModel::class,
         ])->group($callback);
 
         BaseRoute::prefix('{' . $this->names()->parameter . '}')
@@ -32,6 +34,7 @@ class Route
                 LocalizationByCookie::class,
                 LocalizationByHeader::class,
                 LocalizationBySession::class,
+                LocalizationByModel::class,
             ])->group($callback);
     }
 }

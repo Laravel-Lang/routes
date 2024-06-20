@@ -32,8 +32,18 @@ abstract class TestCase extends BaseTestCase
 
         $config->set('app.locale', LocaleValue::LocaleMain);
 
+        $config->set('auth.guards.foo', [
+            'driver'   => 'session',
+            'provider' => 'users',
+        ]);
+
         $config->set(Name::Shared() . '.aliases', [
             LocaleValue::LocaleAliasParent => LocaleValue::LocaleAlias,
         ]);
+    }
+
+    protected function defineDatabaseMigrations(): void
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
     }
 }
