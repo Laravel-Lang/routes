@@ -8,6 +8,7 @@ use Closure;
 use LaravelLang\Routes\Facades\LocalizationRoute;
 use LaravelLang\Routes\Middlewares\LocalizationByCookie;
 use LaravelLang\Routes\Middlewares\LocalizationByHeader;
+use LaravelLang\Routes\Middlewares\LocalizationByModel;
 use LaravelLang\Routes\Middlewares\LocalizationByParameter;
 use LaravelLang\Routes\Middlewares\LocalizationByParameterWithRedirect;
 use LaravelLang\Routes\Middlewares\LocalizationBySession;
@@ -54,12 +55,23 @@ trait Routes
                     ->name('via.session');
 
                 app('router')
+                    ->middleware(LocalizationByModel::class)
+                    ->get('model/default/{foo}', $this->jsonResponse())
+                    ->name('via.model.default');
+
+                app('router')
+                    ->middleware(LocalizationByModel::class . ':foo')
+                    ->get('model/guard/{foo}', $this->jsonResponse())
+                    ->name('via.model.guard');
+
+                app('router')
                     ->middleware([
                         LocalizationByParameter::class,
                         LocalizationByParameterWithRedirect::class,
                         LocalizationByHeader::class,
                         LocalizationByCookie::class,
                         LocalizationBySession::class,
+                        LocalizationByModel::class,
                     ])
                     ->get('clean/{foo}', $this->jsonResponse())
                     ->name('clean');
