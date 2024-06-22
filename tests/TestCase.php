@@ -57,8 +57,6 @@ abstract class TestCase extends BaseTestCase
      * Define routes setup.
      *
      * @param  \Illuminate\Routing\Router  $router
-     *
-     * @return void
      */
     protected function defineRoutes($router): void
     {
