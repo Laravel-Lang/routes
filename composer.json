@@ -47,7 +47,10 @@
     "autoload": {
         "psr-4": {
             "LaravelLang\\Routes\\": "src/"
-        }
+        },
+        "files": [
+            "helpers/functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
