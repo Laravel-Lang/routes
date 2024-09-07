@@ -6,8 +6,8 @@ use LaravelLang\Config\Facades\Config;
 use Tests\Constants\LocaleValue;
 
 test('route groups', function () {
-    $name     = Config::shared()->routes->namePrefix;
-    $locale   = LocaleValue::LocaleMain;
+    $name = Config::shared()->routes->namePrefix;
+    $locale = LocaleValue::LocaleMain;
     $fallback = LocaleValue::LocaleAliasParent;
 
     expect(localizedRoute($name . 'via.group.facade', ['foo' => 'bar']))
