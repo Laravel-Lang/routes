@@ -6,12 +6,14 @@ namespace LaravelLang\Routes\Middlewares;
 
 use Closure;
 use Illuminate\Http\Request;
+use LaravelLang\Config\Facades\Config;
 use LaravelLang\Locales\Data\LocaleData;
 use LaravelLang\Locales\Facades\Locales;
 use LaravelLang\Routes\Concerns\RouteParameters;
 use LaravelLang\Routes\Events\LocaleHasBeenSetEvent;
 
 use function app;
+use function session;
 use function trim;
 
 abstract class Middleware
@@ -42,6 +44,10 @@ abstract class Middleware
     protected function setLocale(string $locale): void
     {
         app()->setLocale($locale);
+
+        if (session()) {
+            session()->put(Config::shared()->routes->names->session, $locale);
+        }
     }
 
     protected function event(LocaleData $locale): void
