@@ -16,9 +16,11 @@ class LocalizationByHeader extends Middleware
             return null;
         }
 
-        return Locales::isInstalled(
-            $this->strBefore($value, [',', ';'])
-        );
+        if (! Locales::isInstalled($this->strBefore($value, [',', ';']))) {
+            return null;
+        }
+
+        return $value;
     }
 
     protected function strBefore(string $value, array $search): string

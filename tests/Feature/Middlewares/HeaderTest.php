@@ -52,7 +52,7 @@ test('uninstalled locale', function (string $locale) {
         ->assertSuccessful()
         ->assertJsonPath($foo, LocaleValue::TranslationFrench);
 
-    assertEventDispatched();
+    assertEventNotDispatched();
 })->with('uninstalled-locales');
 
 test('unknown locale', function (int|string $locale) {
@@ -64,5 +64,5 @@ test('unknown locale', function (int|string $locale) {
         ->assertSuccessful()
         ->assertJsonPath($foo, LocaleValue::TranslationFrench);
 
-    assertEventDispatched();
+    assertEventNotDispatched();
 })->with('unknown-locales');
