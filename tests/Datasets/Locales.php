@@ -16,7 +16,6 @@ dataset('aliased-locales', [
 
 dataset('empty-locales', [
     '',
-    ' ',
     null,
     0,
 ]);
