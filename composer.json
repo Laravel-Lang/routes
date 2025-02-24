@@ -38,8 +38,8 @@
     },
     "require-dev": {
         "orchestra/testbench": "^8.23 || ^9.1 || ^10.0",
-        "pestphp/pest": "^2.34",
-        "pestphp/pest-plugin-laravel": "^2.4",
+        "pestphp/pest": "^2.34 || ^3.0",
+        "pestphp/pest-plugin-laravel": "^2.4 || ^3.0",
         "symfony/var-dumper": "^6.0 || ^7.0"
     },
     "minimum-stability": "stable",
