@@ -6,13 +6,9 @@ namespace LaravelLang\Routes\Services;
 
 use Closure;
 use Illuminate\Support\Facades\Route as BaseRoute;
+use LaravelLang\Config\Facades\Config;
 use LaravelLang\Routes\Concerns\RouteParameters;
 use LaravelLang\Routes\Helpers\Route as RouteName;
-use LaravelLang\Routes\Middlewares\LocalizationByCookie;
-use LaravelLang\Routes\Middlewares\LocalizationByHeader;
-use LaravelLang\Routes\Middlewares\LocalizationByModel;
-use LaravelLang\Routes\Middlewares\LocalizationByParameterPrefix;
-use LaravelLang\Routes\Middlewares\LocalizationBySession;
 
 class Route
 {
@@ -20,21 +16,23 @@ class Route
 
     public function group(Closure $callback): void
     {
-        BaseRoute::middleware([
-            LocalizationByCookie::class,
-            LocalizationByHeader::class,
-            LocalizationBySession::class,
-            LocalizationByModel::class,
-        ])->group($callback);
+        $this->defaultGroup($callback);
+        $this->prefixedGroup($callback);
+    }
 
+    protected function defaultGroup(Closure $callback): void
+    {
+        BaseRoute::middleware(
+            Config::shared()->routes->group->middleware->default
+        )->group($callback);
+    }
+
+    protected function prefixedGroup(Closure $callback): void
+    {
         BaseRoute::prefix('{' . $this->names()->parameter . '}')
             ->name(RouteName::prefix())
-            ->middleware([
-                LocalizationByParameterPrefix::class,
-                LocalizationByCookie::class,
-                LocalizationByHeader::class,
-                LocalizationBySession::class,
-                LocalizationByModel::class,
-            ])->group($callback);
+            ->middleware(
+                Config::shared()->routes->group->middleware->prefix
+            )->group($callback);
     }
 }
