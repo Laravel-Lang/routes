@@ -11,8 +11,7 @@ class LocalizationByModel extends Middleware
 {
     public function __construct(
         protected ?string $guard = null,
-    ) {
-    }
+    ) {}
 
     protected function detect(Request $request): bool|float|int|string|null
     {

@@ -16,6 +16,5 @@ class LocaleHasBeenSetEvent
 
     public function __construct(
         public LocaleData $locale
-    ) {
-    }
+    ) {}
 }
