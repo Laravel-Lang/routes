@@ -24,6 +24,8 @@ test('route groups', function () {
 });
 
 test('routes without groups', function () {
+    $locale = LocaleValue::LocaleMain;
+
     expect(localizedRoute('via.model.default', ['foo' => 'bar']))
-        ->toEndWith('localhost/model/default/bar');
+        ->toEndWith('localhost/model/default/bar?locale=' . $locale);
 });
