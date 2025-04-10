@@ -5,26 +5,30 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use LaravelLang\Config\Facades\Config;
+use LaravelLang\Locales\Facades\Locales;
 
 if (! function_exists('localizedRoute')) {
     function localizedRoute(
         string $route,
         array $parameters = [],
         bool $absolute = true,
-        bool $redirectDefault = false
+        bool $hideDefault = false
     ): string {
-        $currentLocale = app()->getLocale();
-        $defaultLocale = config('app.locale');
-
-        if ($redirectDefault && $currentLocale === $defaultLocale) {
+        if ($hideDefault & Locales::raw()->getFallback() === Locales::raw()->getDefault()) {
             return route($route, $parameters, $absolute);
         }
 
-        $config = Config::shared()->routes;
-        $name = Str::start($route, $config->namePrefix);
+        $locale = Config::shared()->routes->names->parameter;
+        $prefix = Config::shared()->routes->namePrefix;
 
-        return Route::has($name)
-            ? route($name, [$config->names->parameter => $currentLocale] + $parameters, $absolute)
-            : route($route, $parameters, $absolute);
+        $name = Str::start($route, $prefix);
+
+        if (! Route::has($name)) {
+            return route($route, $parameters, $absolute);
+        }
+
+        return route($name, array_merge([
+            $locale => app()->getLocale(),
+        ], $parameters), $absolute);
     }
 }
