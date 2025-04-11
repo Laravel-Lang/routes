@@ -33,9 +33,21 @@ test('routes without groups', function () {
 
 test('routes hide fallback', function () {
     config()->set(Name::Shared() . '.routes.hide_default', true);
-    config()->set('app.locale', \LaravelLang\LocaleList\Locale::Maori->value);
-    config()->set('app.fallback_locale', \LaravelLang\LocaleList\Locale::Maori->value);
+    config()->set('app.locale', LocaleValue::LocaleMain);
+    config()->set('app.fallback_locale', LocaleValue::LocaleMain);
 
     expect(localizedRoute('via.group.macro', ['foo' => 'bar']))
         ->toEndWith("localhost/group/macro/bar");
+});
+
+test('routes does not hide', function () {
+    $locale   = LocaleValue::LocaleMain;
+    $fallback = LocaleValue::LocaleAliasParent;
+
+    config()->set(Name::Shared() . '.routes.hide_default', true);
+    config()->set('app.locale', $locale);
+    config()->set('app.fallback_locale', $fallback);
+
+    expect(localizedRoute('via.group.macro', ['foo' => 'bar']))
+        ->toEndWith("localhost/$locale/group/macro/bar");
 });

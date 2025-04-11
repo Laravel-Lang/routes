@@ -63,12 +63,11 @@ class LocalizationByParameterWithRedirect extends Middleware
 
         if ($withoutLocale) {
             unset($parameters['locale']);
+            return $parameters;
         }
 
-        return array_merge($parameters, [
-            $this->names()->parameter => $withoutLocale
-                ? $this->defaultLocale()
-                : $this->fallbackLocale(),
+        return array_merge($request->route()?->parameters() ?? [], [
+            $this->names()->parameter => $this->defaultLocale(),
         ]);
     }
 
