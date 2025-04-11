@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use LaravelLang\Config\Facades\Config;
 use Tests\Constants\LocaleValue;
+use LaravelLang\Config\Enums\Name;
 
 test('route groups', function () {
     $name     = Config::shared()->routes->namePrefix;
@@ -26,4 +27,13 @@ test('route groups', function () {
 test('routes without groups', function () {
     expect(localizedRoute('via.model.default', ['foo' => 'bar']))
         ->toEndWith('localhost/model/default/bar');
+});
+
+test('routes hide fallback', function () {
+    config()->set(Name::Shared() . '.routes.hide_default', true);
+    config()->set('app.locale', \LaravelLang\LocaleList\Locale::Maori->value);
+    config()->set('app.fallback_locale', \LaravelLang\LocaleList\Locale::Maori->value);
+
+    expect(localizedRoute('via.group.macro', ['foo' => 'bar']))
+        ->toEndWith("localhost/group/macro/bar");
 });
