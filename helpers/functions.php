@@ -22,11 +22,9 @@ if (! function_exists('localizedRoute')) {
 
         $name = Str::start($route, $prefix);
 
-        if (! Route::has($name)) {
-            return route($route, $parameters, $absolute);
-        }
+        $route = Route::has($name) ? $name : $route;
 
-        return route($name, array_merge([
+        return route($route, array_merge([
             $locale => app()->getLocale(),
         ], $parameters), $absolute);
     }
