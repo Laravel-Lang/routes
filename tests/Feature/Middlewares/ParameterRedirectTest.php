@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use LaravelLang\Config\Enums\Name;
 use Tests\Constants\LocaleValue;
 
 use function Pest\Laravel\getJson;
@@ -71,3 +72,17 @@ test('not named', function (int|string|null $locale) {
 
     assertEventNotDispatched();
 })->with('empty-locales');
+
+test('hide fallback locale', function () {
+    config()->set(Name::Shared() . '.routes.hide_default', true);
+    config()->set('app.locale', \LaravelLang\LocaleList\Locale::Maori->value);
+    config()->set('app.fallback_locale', \LaravelLang\LocaleList\Locale::Maori->value);
+
+    $foo = 'test';
+    $locale = \LaravelLang\LocaleList\Locale::Maori->value;
+
+    getJson(route('via.parameter.redirect', compact('foo', 'locale')))
+        ->assertRedirectToRoute('via.parameter.redirect', [
+            'foo'    => $foo,
+        ]);
+});
