@@ -12,9 +12,8 @@ if (! function_exists('localizedRoute')) {
         string $route,
         array $parameters = [],
         bool $absolute = true,
-        bool $hideDefault = false
     ): string {
-        if ($hideDefault & Locales::raw()->getFallback() === Locales::raw()->getDefault()) {
+        if (Config::shared()->routes->hide && Locales::raw()->getFallback() === Locales::raw()->getCurrent()) {
             return route($route, $parameters, $absolute);
         }
 
