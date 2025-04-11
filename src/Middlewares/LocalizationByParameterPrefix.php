@@ -13,7 +13,7 @@ use LaravelLang\Routes\Helpers\Route;
 
 class LocalizationByParameterPrefix extends LocalizationByParameterWithRedirect
 {
-    protected function parameters(Request $request): array
+    protected function parameters(Request $request, bool $withoutLocale = false): array
     {
         return Arr::except($request->route()?->parameters() ?? [], [
             $this->names()->parameter,
