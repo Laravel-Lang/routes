@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use LaravelLang\Config\Facades\Config;
 use Tests\Constants\LocaleValue;
+use LaravelLang\Config\Enums\Name;
 
 test('route groups', function () {
     $name     = Config::shared()->routes->namePrefix;
@@ -28,4 +29,25 @@ test('routes without groups', function () {
 
     expect(localizedRoute('via.model.default', ['foo' => 'bar']))
         ->toEndWith('localhost/model/default/bar?locale=' . $locale);
+});
+
+test('routes hide fallback', function () {
+    config()->set(Name::Shared() . '.routes.hide_default', true);
+    config()->set('app.locale', LocaleValue::LocaleMain);
+    config()->set('app.fallback_locale', LocaleValue::LocaleMain);
+
+    expect(localizedRoute('via.group.macro', ['foo' => 'bar']))
+        ->toEndWith("localhost/group/macro/bar");
+});
+
+test('routes does not hide', function () {
+    $locale   = LocaleValue::LocaleMain;
+    $fallback = LocaleValue::LocaleAliasParent;
+
+    config()->set(Name::Shared() . '.routes.hide_default', true);
+    config()->set('app.locale', $locale);
+    config()->set('app.fallback_locale', $fallback);
+
+    expect(localizedRoute('via.group.macro', ['foo' => 'bar']))
+        ->toEndWith("localhost/$locale/group/macro/bar");
 });
