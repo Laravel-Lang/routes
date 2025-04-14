@@ -10,8 +10,6 @@ use Illuminate\Http\Request;
 use LaravelLang\Locales\Facades\Locales;
 use LaravelLang\Routes\Concerns\RouteParameters;
 
-use LaravelLang\Routes\Helpers\Route;
-
 use function array_merge;
 use function in_array;
 use function response;
@@ -22,14 +20,8 @@ class LocalizationByParameterWithRedirect extends Middleware
 
     public function __invoke(Request $request, Closure $next)
     {
-        $name = $this->routeName($request);
-
-        if ($this->present($request) && $this->invalidParameter($request) && $name) {
+        if ($this->present($request) && $this->invalidParameter($request) && ($name = $this->routeName($request))) {
             return $this->redirect($name, $this->parameters($request));
-        }
-
-        if (Route::hidingFallback()) {
-            return $this->redirect($name, $this->parameters($request, true));
         }
 
         return parent::__invoke($request, $next);
@@ -57,15 +49,8 @@ class LocalizationByParameterWithRedirect extends Middleware
         return in_array($this->names()->parameter, $request->route()->parameterNames(), true);
     }
 
-    protected function parameters(Request $request, bool $withoutLocale = false): array
+    protected function parameters(Request $request): array
     {
-        $parameters = $request->route()?->parameters() ?? [];
-
-        if ($withoutLocale) {
-            unset($parameters['locale']);
-            return $parameters;
-        }
-
         return array_merge($request->route()?->parameters() ?? [], [
             $this->names()->parameter => $this->defaultLocale(),
         ]);
@@ -84,11 +69,6 @@ class LocalizationByParameterWithRedirect extends Middleware
     protected function defaultLocale(): string
     {
         return Locales::getDefault()->code;
-    }
-
-    protected function fallbackLocale(): string
-    {
-        return Locales::getFallback()->code;
     }
 
     protected function isInstalled(bool|float|int|string|null $locale): bool
