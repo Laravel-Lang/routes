@@ -31,24 +31,40 @@ test('routes without groups', function () {
         ->toEndWith('localhost/model/default/bar?locale=' . $locale);
 });
 
-test('routes hide fallback', function () {
+test('routes hide fallback', function (bool $set) {
     $locale   = LocaleValue::LocaleMain;
     $fallback = LocaleValue::LocaleMain;
 
     config()->set(Name::Shared() . '.routes.hide_default', true);
-    config()->set('app.locale', $locale);
+    config()->set('app.fallback_locale', $fallback);
+
+    $params = $set
+        ? ['foo' => 'bar', 'locale' => $locale]
+        : ['foo' => 'bar'];
+
+    expect(localizedRoute('via.group.macro', $params))
+        ->toEndWith("localhost/group/macro/bar");
+})->with([true, false]);
+
+test('routes hide manual', function (bool $set) {
+    $locale   = LocaleValue::LocaleMain;
+    $fallback = LocaleValue::LocaleAliasParent;
+
+    config()->set(Name::Shared() . '.routes.hide_default', true);
     config()->set('app.fallback_locale', $fallback);
 
     expect(localizedRoute('via.group.macro', ['foo' => 'bar', 'locale' => $locale]))
+        ->toEndWith("localhost/$locale/group/macro/bar");
+
+    expect(localizedRoute('via.group.macro', ['foo' => 'bar', 'locale' => $fallback]))
         ->toEndWith("localhost/group/macro/bar");
-});
+})->with([true, false]);
 
 test('routes does not hide', function () {
     $locale   = LocaleValue::LocaleMain;
     $fallback = LocaleValue::LocaleAliasParent;
 
     config()->set(Name::Shared() . '.routes.hide_default', true);
-    config()->set('app.locale', $locale);
     config()->set('app.fallback_locale', $fallback);
 
     expect(localizedRoute('via.group.macro', ['foo' => 'bar']))
