@@ -25,7 +25,7 @@ class Route
         return Config::shared()->routes->hide;
     }
 
-    public static function hidingFallback(Locale|string|null $locale): bool
+    public static function hidingFallback(Locale|string $locale): bool
     {
         if (! static::hide() || ! Locales::isInstalled($locale)) {
             return false;
