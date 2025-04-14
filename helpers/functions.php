@@ -13,7 +13,7 @@ if (! function_exists('localizedRoute')) {
         $locale = Config::shared()->routes->names->parameter;
         $prefix = Config::shared()->routes->namePrefix;
 
-        if (RouteHelper::hidingFallback()) {
+        if (RouteHelper::hidingFallback($locale)) {
             unset($parameters[$locale]);
 
             return route($route, $parameters, $absolute);
