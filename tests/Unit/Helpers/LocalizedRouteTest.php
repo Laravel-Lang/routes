@@ -55,7 +55,7 @@ test('routes hide manual', function () {
     config()->set(Name::Shared() . '.routes.hide_default', true);
     config()->set('app.fallback_locale', $fallback);
 
-    expect(localizedRoute('via.group.macro', ['foo' => 'bar', $name => $locale]))
+    expect(localizedRoute('via.parameter', ['foo' => 'bar', $name => $locale]))
         ->toEndWith("localhost/path/bar/$locale");
 
     expect(localizedRoute('via.parameter', ['foo' => 'bar', $name => $fallback]))
