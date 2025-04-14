@@ -6,6 +6,7 @@ namespace LaravelLang\Routes\Helpers;
 
 use LaravelLang\Config\Facades\Config;
 use LaravelLang\Locales\Facades\Locales;
+use LaravelLang\LocaleList\Locale;
 
 class Route
 {
@@ -24,7 +25,7 @@ class Route
         return Config::shared()->routes->hide;
     }
 
-    public static function hidingFallback(string $locale): bool
+    public static function hidingFallback(Locale|string|string $locale): bool
     {
         if (! static::hide() || ! Locales::isAvailable($locale)) {
             return false;
