@@ -11,21 +11,21 @@ if (! function_exists('localizedRoute')) {
     function localizedRoute(
         string $route,
         array $parameters = [],
-        bool $absolute = true,
+        bool $absolute = true
     ): string {
+        $localeKey = Config::shared()->routes->names->parameter;
+
         if (RouteHelper::hidingFallback()) {
+            unset($parameters[$localeKey]);
             return route($route, $parameters, $absolute);
         }
 
-        $locale = Config::shared()->routes->names->parameter;
         $prefix = Config::shared()->routes->namePrefix;
-
-        $name = Str::start($route, $prefix);
-
+        $name = Str::startsWith($route, $prefix) ? $route : Str::start($route, $prefix);
         $route = Route::has($name) ? $name : $route;
 
         return route($route, array_merge([
-            $locale => app()->getLocale(),
+            $localeKey => app()->getLocale(),
         ], $parameters), $absolute);
     }
 }

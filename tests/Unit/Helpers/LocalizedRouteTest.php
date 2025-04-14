@@ -32,11 +32,14 @@ test('routes without groups', function () {
 });
 
 test('routes hide fallback', function () {
-    config()->set(Name::Shared() . '.routes.hide_default', true);
-    config()->set('app.locale', LocaleValue::LocaleMain);
-    config()->set('app.fallback_locale', LocaleValue::LocaleMain);
+    $locale   = LocaleValue::LocaleMain;
+    $fallback = LocaleValue::LocaleMain;
 
-    expect(localizedRoute('via.group.macro', ['foo' => 'bar']))
+    config()->set(Name::Shared() . '.routes.hide_default', true);
+    config()->set('app.locale', $locale);
+    config()->set('app.fallback_locale', $fallback);
+
+    expect(localizedRoute('via.group.macro', ['foo' => 'bar', 'locale' => $locale]))
         ->toEndWith("localhost/group/macro/bar");
 });
 
