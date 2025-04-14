@@ -14,7 +14,7 @@ if (! function_exists('localizedRoute')) {
         $locale = Config::shared()->routes->names->parameter;
         $prefix = Config::shared()->routes->namePrefix;
 
-        $parameters[$locale] ??= Locales::raw()->getCurrent();
+        $parameters[$locale] ??= Locales::raw()->getFallback();
 
         if (RouteHelper::hidingFallback($parameters[$locale])) {
             unset($parameters[$locale]);
