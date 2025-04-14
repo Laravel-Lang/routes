@@ -26,6 +26,6 @@ class Route
 
     public static function hidingFallback(): bool
     {
-        return self::hide() && Locales::raw()->getFallback() === Locales::raw()->getCurrent();
+        return static::hide() && Locales::raw()->getFallback() === Locales::raw()->getCurrent();
     }
 }
