@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use LaravelLang\Config\Enums\Name;
 use Tests\Constants\LocaleValue;
 
 use function Pest\Laravel\getJson;
