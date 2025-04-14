@@ -27,7 +27,7 @@ class Route
 
     public static function hidingFallback(Locale|string|null $locale): bool
     {
-        if (! static::hide() || ! Locales::isAvailable($locale)) {
+        if (! static::hide() || ! Locales::isInstalled($locale)) {
             return false;
         }
         
