@@ -24,8 +24,12 @@ class Route
         return Config::shared()->routes->hide;
     }
 
-    public static function hidingFallback(): bool
+    public static function hidingFallback(string $locale): bool
     {
-        return static::hide() && Locales::raw()->getFallback() === Locales::raw()->getCurrent();
+        if (! static::hide() || ! Locales::isAvailable($locale)) {
+            return false;
+        }
+        
+        return Locales::raw()->get($locale) === Locales::raw()->getFallback();
     }
 }
