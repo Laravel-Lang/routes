@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use LaravelLang\Config\Facades\Config;
+use LaravelLang\Locales\Facades\Locales;
 use LaravelLang\Routes\Helpers\Route as RouteHelper;
 
 if (! function_exists('localizedRoute')) {
@@ -13,13 +14,15 @@ if (! function_exists('localizedRoute')) {
         $locale = Config::shared()->routes->names->parameter;
         $prefix = Config::shared()->routes->namePrefix;
 
-        if (RouteHelper::hidingFallback($parameters[$locale] ?? null)) {
+        $parameters[$locale] ??= Locales::raw()->getCurrent();
+
+        if (RouteHelper::hidingFallback($parameters[$locale])) {
             unset($parameters[$locale]);
 
             return route($route, $parameters, $absolute);
         }
 
-        $name = Str::start($route, $prefix);
+        $name  = Str::start($route, $prefix);
         $route = Route::has($name) ? $name : $route;
 
         return route($route, array_merge([
