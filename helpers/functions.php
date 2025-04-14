@@ -8,11 +8,8 @@ use LaravelLang\Config\Facades\Config;
 use LaravelLang\Routes\Helpers\Route as RouteHelper;
 
 if (! function_exists('localizedRoute')) {
-    function localizedRoute(
-        string $route,
-        array $parameters = [],
-        bool $absolute = true,
-    ): string {
+    function localizedRoute(string $route, array $parameters = [], bool $absolute = true): string
+    {
         if (RouteHelper::hidingFallback()) {
             return route($route, $parameters, $absolute);
         }
