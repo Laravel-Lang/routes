@@ -43,7 +43,7 @@ test('routes hide fallback', function (bool $set) {
         : ['foo' => 'bar'];
 
     expect(localizedRoute('via.parameter', $params))
-        ->toEndWith("localhost/path/bar");
+        ->toEndWith('localhost/path/bar');
 })->with([true, false]);
 
 test('routes hide manual', function () {
@@ -57,7 +57,7 @@ test('routes hide manual', function () {
         ->toEndWith("localhost/path/bar/$locale");
 
     expect(localizedRoute('via.parameter', ['foo' => 'bar', 'locale' => $fallback]))
-        ->toEndWith("localhost/path/bar");
+        ->toEndWith('localhost/path/bar');
 });
 
 test('routes does not hide', function () {
@@ -67,5 +67,5 @@ test('routes does not hide', function () {
     config()->set('app.fallback_locale', $fallback);
 
     expect(localizedRoute('via.parameter', ['foo' => 'bar']))
-        ->toEndWith("localhost/path/bar");
+        ->toEndWith('localhost/path/bar');
 });
