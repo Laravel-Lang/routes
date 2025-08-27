@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace LaravelLang\Routes\Helpers;
 
 use LaravelLang\Config\Facades\Config;
-use LaravelLang\Locales\Facades\Locales;
 use LaravelLang\LocaleList\Locale;
+use LaravelLang\Locales\Facades\Locales;
 
 class Route
 {
@@ -30,7 +30,7 @@ class Route
         if (! static::hide() || ! Locales::isInstalled($locale)) {
             return false;
         }
-        
+
         return Locales::raw()->get($locale) === Locales::raw()->getFallback();
     }
 }
