@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 use Tests\Constants\LocaleValue;
 
-use function Pest\Laravel\getJson;
-
 test('without locale passing', function () {
     $foo = 'test';
 

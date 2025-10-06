@@ -5,8 +5,6 @@ declare(strict_types=1);
 use LaravelLang\Config\Facades\Config;
 use Tests\Constants\LocaleValue;
 
-use function Pest\Laravel\getJson;
-
 test('main locale', function (string $locale) {
     $foo = 'test';
 
@@ -66,3 +64,15 @@ test('unknown locale', function (int|string $locale) {
 
     assertEventNotDispatched();
 })->with('unknown-locales');
+
+test('multiple accept-language', function () {
+    $foo = 'test';
+
+    getJson(route('via.header', compact('foo')), [
+        Config::shared()->routes->names->header => "fr-FR,fr;q=0.8,de",
+    ])
+        ->assertSuccessful()
+        ->assertJsonPath($foo, LocaleValue::TranslationFrench);
+
+    assertEventDispatched();
+});

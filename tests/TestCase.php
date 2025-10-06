@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use Closure;
+use CodeZero\BrowserLocale\Laravel\BrowserLocaleServiceProvider;
 use LaravelLang\Config\Enums\Name;
 use LaravelLang\Config\ServiceProvider as ConfigServiceProvider;
 use LaravelLang\Locales\ServiceProvider as LocalesServiceProvider;
@@ -27,6 +28,7 @@ abstract class TestCase extends BaseTestCase
     protected function getPackageProviders($app): array
     {
         return [
+            BrowserLocaleServiceProvider::class,
             LocalesServiceProvider::class,
             ConfigServiceProvider::class,
             ServiceProvider::class,

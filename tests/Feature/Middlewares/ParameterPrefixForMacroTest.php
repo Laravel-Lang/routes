@@ -6,8 +6,6 @@ use LaravelLang\Config\Enums\Name;
 use LaravelLang\Routes\Helpers\Route as RouteName;
 use Tests\Constants\LocaleValue;
 
-use function Pest\Laravel\getJson;
-
 test('main without prefix', function () {
     $foo = 'test';
 

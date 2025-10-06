@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Tests\Constants\LocaleValue;
 
 use function Pest\Laravel\actingAs;
-use function Pest\Laravel\getJson;
 
 test('main locale', function () {
     actingAs(fakeUser());
