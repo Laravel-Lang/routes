@@ -78,7 +78,21 @@ test('multiple accept-language', function () {
     $foo = 'test';
 
     getJson(route('via.header', compact('foo')), [
-        Config::shared()->routes->names->header => "fr-FR,fr;q=0.8,de",
+        Config::shared()->routes->names->header => 'fr-FR,fr;q=0.8,de',
+    ])
+        ->assertSuccessful()
+        ->assertJsonPath($foo, LocaleValue::TranslationFrench);
+
+    assertEventDispatched();
+});
+
+test('custom header', function () {
+    config(['localization.routes.names.header' => 'X-Custom-Lang']);
+
+    $foo = 'test';
+
+    getJson(route('via.header', compact('foo')), [
+        'X-Custom-Lang' => 'fr-FR,fr;q=0.8,de',
     ])
         ->assertSuccessful()
         ->assertJsonPath($foo, LocaleValue::TranslationFrench);
