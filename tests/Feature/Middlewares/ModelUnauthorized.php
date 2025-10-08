@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use Tests\Constants\LocaleValue;
 
+use function Pest\Laravel\getJson;
+
 test('with guard', function () {
     $foo = 'test';
 

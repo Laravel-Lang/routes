@@ -30,5 +30,6 @@ dataset('unknown-locales', [
     'foo',
     'bar',
     'qwerty',
+    'en_US',
     123,
 ]);

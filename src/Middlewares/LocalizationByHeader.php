@@ -13,7 +13,7 @@ class LocalizationByHeader extends Middleware
 {
     protected function detect(Request $request): bool|float|int|string|null
     {
-        $locales = $this->getLocales();
+        $locales = $this->getLocales($request);
 
         foreach ($locales as $locale) {
             if (Locales::isInstalled($locale)) {
@@ -24,8 +24,19 @@ class LocalizationByHeader extends Middleware
         return null;
     }
 
-    private function getLocales(): array
+    private function getLocales(Request $request): array
     {
-        return app(BrowserLocale::class)->filter(new CombinedFilter);
+        return (new BrowserLocale($this->header($request)))
+            ->filter(new CombinedFilter);
+    }
+
+    private function header(Request $request): ?string
+    {
+        return $request->header($this->attribute());
+    }
+
+    private function attribute(): string
+    {
+        return $this->names()->header;
     }
 }

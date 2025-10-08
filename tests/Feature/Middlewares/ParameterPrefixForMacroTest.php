@@ -3,13 +3,18 @@
 declare(strict_types=1);
 
 use LaravelLang\Config\Enums\Name;
+use LaravelLang\Config\Facades\Config;
 use LaravelLang\Routes\Helpers\Route as RouteName;
 use Tests\Constants\LocaleValue;
+
+use function Pest\Laravel\getJson;
 
 test('main without prefix', function () {
     $foo = 'test';
 
-    getJson(route('via.group.macro', compact('foo')))
+    getJson(route('via.group.macro', compact('foo')), [
+        Config::shared()->routes->names->header => ''
+    ])
         ->assertSuccessful()
         ->assertJsonPath($foo, LocaleValue::TranslationFrench);
 });
@@ -32,7 +37,9 @@ test('main locale with disabled redirect', function (string $locale) {
 
     $foo = 'test';
 
-    getJson(route(RouteName::prefix() . 'via.group.macro', compact('foo', 'locale')))
+    getJson(route(RouteName::prefix() . 'via.group.macro', compact('foo', 'locale')), [
+        Config::shared()->routes->names->header => ''
+    ])
         ->assertSuccessful()
         ->assertJsonPath($foo, LocaleValue::TranslationFrench);
 
@@ -42,7 +49,9 @@ test('main locale with disabled redirect', function (string $locale) {
 test('aliased locale', function (string $locale) {
     $foo = 'test';
 
-    getJson(route(RouteName::prefix() . 'via.group.macro', compact('foo', 'locale')))
+    getJson(route(RouteName::prefix() . 'via.group.macro', compact('foo', 'locale')), [
+        Config::shared()->routes->names->header => ''
+    ])
         ->assertSuccessful()
         ->assertJsonPath($foo, LocaleValue::TranslationGerman);
 
