@@ -38,7 +38,6 @@
         "laravel-lang/locales": "^2.10"
     },
     "require-dev": {
-        "laravel/pint": "^1.25",
         "orchestra/testbench": "^8.23 || ^9.1 || ^10.0",
         "pestphp/pest": "^2.34 || ^3.0",
         "pestphp/pest-plugin-laravel": "^2.4 || ^3.0",
@@ -79,7 +78,6 @@
         }
     },
     "scripts": {
-        "style": "vendor/bin/pint --parallel",
         "test": "vendor/bin/pest --parallel"
     }
 }
