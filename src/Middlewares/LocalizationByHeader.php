@@ -4,33 +4,34 @@ declare(strict_types=1);
 
 namespace LaravelLang\Routes\Middlewares;
 
+use CodeZero\BrowserLocale\BrowserLocale;
+use CodeZero\BrowserLocale\Filters\CombinedFilter;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use LaravelLang\Locales\Facades\Locales;
 
 class LocalizationByHeader extends Middleware
 {
     protected function detect(Request $request): bool|float|int|string|null
     {
-        if (! $value = $request->header($this->names()->header)) {
-            return null;
-        }
-
-        if (! Locales::isInstalled($this->strBefore($value, [',', ';']))) {
-            return null;
-        }
-
-        return $value;
-    }
-
-    protected function strBefore(string $value, array $search): string
-    {
-        foreach ($search as $needle) {
-            if (Str::contains($value, $needle)) {
-                return Str::before($value, $needle);
+        foreach ($this->locales($request) as $locale) {
+            if (Locales::isInstalled($locale)) {
+                return $locale;
             }
         }
 
-        return $value;
+        return null;
+    }
+
+    protected function locales(Request $request): array
+    {
+        return (new BrowserLocale($this->header($request)))
+            ->filter(new CombinedFilter);
+    }
+
+    protected function header(Request $request): ?string
+    {
+        return $request->header(
+            $this->names()->header
+        );
     }
 }
