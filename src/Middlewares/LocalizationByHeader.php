@@ -13,9 +13,7 @@ class LocalizationByHeader extends Middleware
 {
     protected function detect(Request $request): bool|float|int|string|null
     {
-        $locales = $this->getLocales($request);
-
-        foreach ($locales as $locale) {
+        foreach ($this->locales($request) as $locale) {
             if (Locales::isInstalled($locale)) {
                 return $locale;
             }
@@ -24,19 +22,16 @@ class LocalizationByHeader extends Middleware
         return null;
     }
 
-    private function getLocales(Request $request): array
+    protected function locales(Request $request): array
     {
         return (new BrowserLocale($this->header($request)))
             ->filter(new CombinedFilter);
     }
 
-    private function header(Request $request): ?string
+    protected function header(Request $request): ?string
     {
-        return $request->header($this->attribute());
-    }
-
-    private function attribute(): string
-    {
-        return $this->names()->header;
+        return $request->header(
+            $this->names()->header
+        );
     }
 }

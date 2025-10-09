@@ -6,5 +6,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Event;
 
 uses(Tests\TestCase::class, DatabaseTransactions::class)
-    ->beforeEach(fn () => Event::fake())
-    ->in('Feature', 'Unit');
+    ->in('Feature', 'Unit')
+    ->beforeEach(function () {
+        Event::fake();
+
+        $this->withHeader('Accept-Language', 'zxc');
+    });

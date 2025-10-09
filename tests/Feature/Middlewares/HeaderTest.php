@@ -57,6 +57,7 @@ test('uninstalled locale', function (string $locale) {
 
 test('unknown locale', function (int|string $locale) {
     $foo = 'test';
+
     $translation = $locale === 'en_US'
         ? LocaleValue::TranslationKey
         : LocaleValue::TranslationFrench;
@@ -67,11 +68,9 @@ test('unknown locale', function (int|string $locale) {
         ->assertSuccessful()
         ->assertJsonPath($foo, $translation);
 
-    if ($locale === 'en_US') {
-        assertEventDispatched();
-    } else {
-        assertEventNotDispatched();
-    }
+    $locale === 'en_US'
+        ? assertEventDispatched()
+        : assertEventNotDispatched();
 })->with('unknown-locales');
 
 test('multiple accept-language', function () {
