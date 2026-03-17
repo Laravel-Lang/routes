@@ -40,18 +40,18 @@
         "php": "^8.1",
         "codezero/browser-locale": "^3.4",
         "dragon-code/support": "^6.13",
-        "illuminate/config": "^10.0 || ^11.0 || ^12.0",
-        "illuminate/http": "^10.0 || ^11.0 || ^12.0",
-        "illuminate/routing": "^10.0 || ^11.0 || ^12.0",
-        "illuminate/support": "^10.0 || ^11.0 || ^12.0",
+        "illuminate/config": "^10.0 || ^11.0 || ^12.0 || ^13.0",
+        "illuminate/http": "^10.0 || ^11.0 || ^12.0 || ^13.0",
+        "illuminate/routing": "^10.0 || ^11.0 || ^12.0 || ^13.0",
+        "illuminate/support": "^10.0 || ^11.0 || ^12.0 || ^13.0",
         "laravel-lang/config": "^1.13",
         "laravel-lang/locales": "^2.10"
     },
     "require-dev": {
-        "orchestra/testbench": "^8.23 || ^9.1 || ^10.0",
-        "pestphp/pest": "^2.34 || ^3.0",
-        "pestphp/pest-plugin-laravel": "^2.4 || ^3.0",
-        "symfony/var-dumper": "^6.0 || ^7.0"
+        "orchestra/testbench": "^8.23 || ^9.1 || ^10.0 || ^11.0",
+        "pestphp/pest": "^2.34 || ^3.0 || ^4.0",
+        "pestphp/pest-plugin-laravel": "^2.4 || ^3.0 || ^4.0",
+        "symfony/var-dumper": "^6.0 || ^7.0 || ^8.0"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
