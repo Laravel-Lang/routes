@@ -1,0 +1,93 @@
+{
+    "name": "laravel-lang/routes",
+    "description": "Easy and fast way to localize routes",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "languages",
+        "routes",
+        "translations",
+        "translate",
+        "localization",
+        "l18n"
+    ],
+    "authors": [
+        {
+            "name": "Andrey Helldar",
+            "email": "helldar@dragon-code.pro",
+            "homepage": "https://dragon-code.pro"
+        },
+        {
+            "name": "Laravel-Lang Team",
+            "homepage": "https://github.com/Laravel-Lang"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Laravel-Lang/routes/issues",
+        "source": "https://github.com/Laravel-Lang/routes"
+    },
+    "funding": [
+        {
+            "type": "boosty",
+            "url": "https://boosty.to/dragon-code"
+        },
+        {
+            "type": "yoomoney",
+            "url": "https://yoomoney.ru/to/410012608840929"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "codezero/browser-locale": "^3.4",
+        "dragon-code/support": "^6.13",
+        "illuminate/config": "^10.0 || ^11.0 || ^12.0 || ^13.0",
+        "illuminate/http": "^10.0 || ^11.0 || ^12.0 || ^13.0",
+        "illuminate/routing": "^10.0 || ^11.0 || ^12.0 || ^13.0",
+        "illuminate/support": "^10.0 || ^11.0 || ^12.0 || ^13.0",
+        "laravel-lang/config": "^1.13",
+        "laravel-lang/locales": "^2.10"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.23 || ^9.1 || ^10.0 || ^11.0",
+        "pestphp/pest": "^2.34 || ^3.0 || ^4.0",
+        "pestphp/pest-plugin-laravel": "^2.4 || ^3.0 || ^4.0",
+        "symfony/var-dumper": "^6.0 || ^7.0 || ^8.0"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "LaravelLang\\Routes\\": "src/"
+        },
+        "files": [
+            "helpers/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "ergebnis/composer-normalize": true,
+            "laravel/pint": true,
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true,
+            "symfony/thanks": true
+        },
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaravelLang\\Routes\\ServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest --parallel"
+    }
+}
