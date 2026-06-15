@@ -20,7 +20,7 @@ use Orchestra\Testbench\TestCase as BaseTestCase;
 use Tests\Concerns\Locales;
 use Tests\Constants\LocaleValue;
 
-abstract class TestCase extends BaseTestCase
+abstract class RoutesTestCase extends BaseTestCase
 {
     use Locales;
 
