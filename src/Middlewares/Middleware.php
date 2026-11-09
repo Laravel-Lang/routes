@@ -24,12 +24,23 @@ abstract class Middleware
 
     public function __invoke(Request $request, Closure $next)
     {
-        if ($locale = $this->getLocale($request)) {
-            $this->setLocale($locale->code);
-            $this->event($locale);
-        }
+        $this->apply($request);
 
         return $next($this->forgetParameter($request));
+    }
+
+    protected function apply(Request $request): void
+    {
+        if (! $locale = $this->getLocale($request)) {
+            return;
+        }
+
+        if ($locale->locale->value === app()->getLocale()) {
+            return;
+        }
+
+        $this->setLocale($locale->locale->value);
+        $this->event($locale);
     }
 
     protected function getLocale(Request $request): ?LocaleData

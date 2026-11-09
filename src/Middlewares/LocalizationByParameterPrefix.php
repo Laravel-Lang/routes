@@ -40,7 +40,7 @@ class LocalizationByParameterPrefix extends LocalizationByParameterWithRedirect
     protected function isDefault(bool|float|int|string|null $locale): bool
     {
         if ($this->allowRedirect()) {
-            return Locales::info($locale)->code === Locales::getDefault()->code;
+            return Locales::info($locale)->locale->value === Locales::getDefault()->locale->value;
         }
 
         return false;

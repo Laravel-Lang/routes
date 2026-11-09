@@ -68,7 +68,7 @@ class LocalizationByParameterWithRedirect extends Middleware
 
     protected function defaultLocale(): string
     {
-        return Locales::getDefault()->code;
+        return Locales::getDefault()->locale->value;
     }
 
     protected function isInstalled(bool|float|int|string|null $locale): bool
