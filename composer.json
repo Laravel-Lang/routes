@@ -60,7 +60,7 @@
             "LaravelLang\\Routes\\": "src/"
         },
         "files": [
-            "helpers/functions.php"
+            "functions.php"
         ]
     },
     "autoload-dev": {
