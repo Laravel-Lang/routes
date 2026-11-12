@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use LaravelLang\Config\Services\RouteConfig;
+use LaravelLang\LocaleList\Locale;
 use LaravelLang\Locales\Facades\Locales;
 
 if (! function_exists('localizedRoute')) {
@@ -17,11 +18,15 @@ if (! function_exists('localizedRoute')) {
 
         $parameters[$locale] ??= Locales::raw()->getFallback();
 
-        $hide = $config->hide
-            || ! Locales::isInstalled($parameters[$locale])
-            || Locales::raw()->get($parameters[$locale]) === Locales::raw()->getFallback();
+        $hide = static function (Locale|string $locale) use ($config): bool {
+            if (! $config->hide || ! Locales::isInstalled($locale)) {
+                return false;
+            }
 
-        if ($hide) {
+            return Locales::raw()->get($locale) === Locales::raw()->getFallback();
+        };
+
+        if ($hide($parameters[$locale])) {
             unset($parameters[$locale]);
 
             return route($route, $parameters, $absolute);
