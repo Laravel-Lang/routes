@@ -75,7 +75,7 @@ abstract class Middleware
     protected function forgetParameter(Request $request): Request
     {
         $request->route()->forgetParameter(
-            $this->names()->parameter
+          $this->routeConfig->name->parameter
         );
 
         return $request;

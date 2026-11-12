@@ -18,8 +18,8 @@ if (! function_exists('localizedRoute')) {
         $parameters[$locale] ??= Locales::raw()->getFallback();
 
         $hide = $config->hide
-            || ! Locales::isInstalled($locale)
-            || Locales::raw()->get($locale) === Locales::raw()->getFallback();
+            || ! Locales::isInstalled($parameters[$locale])
+            || Locales::raw()->get($parameters[$locale]) === Locales::raw()->getFallback();
 
         if ($hide) {
             unset($parameters[$locale]);
