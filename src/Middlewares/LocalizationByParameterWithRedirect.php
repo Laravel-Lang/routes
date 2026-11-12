@@ -8,7 +8,6 @@ use Closure;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use LaravelLang\Locales\Facades\Locales;
-use LaravelLang\Routes\Concerns\RouteParameters;
 
 use function array_merge;
 use function in_array;
@@ -16,8 +15,6 @@ use function response;
 
 class LocalizationByParameterWithRedirect extends Middleware
 {
-    use RouteParameters;
-
     public function __invoke(Request $request, Closure $next)
     {
         if ($this->present($request) && $this->invalidParameter($request) && ($name = $this->routeName($request))) {
@@ -29,7 +26,9 @@ class LocalizationByParameterWithRedirect extends Middleware
 
     protected function detect(Request $request): bool|float|int|string|null
     {
-        return $request->route()?->parameter($this->names()->parameter);
+        return $request->route()?->parameter(
+            $this->routeConfig->name->parameter
+        );
     }
 
     protected function invalidParameter(Request $request): ?bool
@@ -41,18 +40,24 @@ class LocalizationByParameterWithRedirect extends Middleware
 
     protected function hasParameter(Request $request): bool
     {
-        return (bool) $request->route()?->hasParameter($this->names()->parameter);
+        return (bool) $request->route()?->hasParameter(
+            $this->routeConfig->name->parameter
+        );
     }
 
     protected function present(Request $request): bool
     {
-        return in_array($this->names()->parameter, $request->route()->parameterNames(), true);
+        return in_array(
+            $this->routeConfig->name->parameter,
+            $request->route()->parameterNames(),
+            true
+        );
     }
 
     protected function parameters(Request $request): array
     {
         return array_merge($request->route()?->parameters() ?? [], [
-            $this->names()->parameter => $this->defaultLocale(),
+            $this->routeConfig->name->parameter => $this->defaultLocale(),
         ]);
     }
 

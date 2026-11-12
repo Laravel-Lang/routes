@@ -10,10 +10,12 @@ class LocalizationBySession extends Middleware
 {
     protected function detect(Request $request): bool|float|int|string|null
     {
-        if ($request->hasSession()) {
-            return $request->getSession()->get($this->names()->session);
+        if (! $request->hasSession()) {
+            return null;
         }
 
-        return null;
+        return $request->getSession()->get(
+            $this->routeConfig->name->session
+        );
     }
 }

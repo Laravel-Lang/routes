@@ -31,7 +31,7 @@ class LocalizationByHeader extends Middleware
     protected function header(Request $request): ?string
     {
         return $request->header(
-            $this->names()->header
+            $this->routeConfig->name->header
         );
     }
 }

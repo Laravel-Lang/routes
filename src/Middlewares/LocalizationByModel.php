@@ -9,10 +9,6 @@ use Illuminate\Http\Request;
 
 class LocalizationByModel extends Middleware
 {
-    public function __construct(
-        protected ?string $guard = null,
-    ) {}
-
     protected function detect(Request $request): bool|float|int|string|null
     {
         if ($this->has($user = $this->user($request))) {
@@ -29,12 +25,12 @@ class LocalizationByModel extends Middleware
 
     protected function user(Request $request): ?Model
     {
-        return $request->user($this->guard);
+        return $request->user();
     }
 
     protected function attribute(): string
     {
-        return $this->names()->column;
+        return $this->routeConfig->name->column;
     }
 
     protected function hasAttribute(Model $user): bool

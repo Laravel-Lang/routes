@@ -7,20 +7,14 @@ namespace LaravelLang\Routes\Middlewares;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use LaravelLang\Config\Services\RouteConfig;
 use LaravelLang\Locales\Facades\Locales;
-use LaravelLang\Routes\Helpers\Route;
 
 class LocalizationByParameterPrefix extends LocalizationByParameterWithRedirect
 {
-    public function __construct(
-        protected RouteConfig $routeConfig,
-    ) {}
-
     protected function parameters(Request $request): array
     {
         return Arr::except($request->route()?->parameters() ?? [], [
-            $this->names()->parameter,
+            $this->routeConfig->name->parameter,
         ]);
     }
 
@@ -52,7 +46,7 @@ class LocalizationByParameterPrefix extends LocalizationByParameterWithRedirect
 
     protected function routePrefix(): string
     {
-        return Route::prefix();
+        return $this->routeConfig->prefix;
     }
 
     protected function allowRedirect(): bool

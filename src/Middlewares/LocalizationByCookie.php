@@ -10,6 +10,8 @@ class LocalizationByCookie extends Middleware
 {
     protected function detect(Request $request): bool|float|int|string|null
     {
-        return $request->cookie($this->names()->cookie);
+        return $request->cookie(
+            $this->routeConfig->name->cookie
+        );
     }
 }

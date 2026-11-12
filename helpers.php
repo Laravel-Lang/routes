@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use LaravelLang\Config\Services\RouteConfig;
 use LaravelLang\Locales\Facades\Locales;
-use LaravelLang\Routes\Helpers\Route as RouteHelper;
 
 if (! function_exists('localizedRoute')) {
     function localizedRoute(string $route, array $parameters = [], bool $absolute = true): string
@@ -18,7 +17,11 @@ if (! function_exists('localizedRoute')) {
 
         $parameters[$locale] ??= Locales::raw()->getFallback();
 
-        if (RouteHelper::hidingFallback($parameters[$locale])) {
+        $hide = $config->hide
+            || ! Locales::isInstalled($locale)
+            || Locales::raw()->get($locale) === Locales::raw()->getFallback();
+
+        if ($hide) {
             unset($parameters[$locale]);
 
             return route($route, $parameters, $absolute);

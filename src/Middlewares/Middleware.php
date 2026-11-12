@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use LaravelLang\Config\Services\RouteConfig;
 use LaravelLang\Locales\Data\LocaleData;
 use LaravelLang\Locales\Facades\Locales;
-use LaravelLang\Routes\Concerns\RouteParameters;
 use LaravelLang\Routes\Events\LocaleHasBeenSetEvent;
 
 use function app;
@@ -18,8 +17,6 @@ use function trim;
 
 abstract class Middleware
 {
-    use RouteParameters;
-
     abstract protected function detect(Request $request): bool|float|int|string|null;
 
     public function __construct(
