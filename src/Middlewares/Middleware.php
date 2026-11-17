@@ -7,8 +7,9 @@ namespace LaravelLang\Routes\Middlewares;
 use Closure;
 use Illuminate\Http\Request;
 use LaravelLang\Config\Services\RouteConfig;
-use LaravelLang\Locales\Data\LocaleData;
+use LaravelLang\Exceptions\UnknownLocaleException;
 use LaravelLang\Locales\Facades\Locales;
+use LaravelLang\NativeLocaleNames\LocaleData;
 use LaravelLang\Routes\Events\LocaleHasBeenSetEvent;
 
 use function app;
@@ -25,7 +26,13 @@ abstract class Middleware
 
     public function __invoke(Request $request, Closure $next)
     {
-        $this->apply($request);
+        try {
+            $this->apply($request);
+        } catch (UnknownLocaleException) {
+            $this->setLocale(
+                Locales::fallback()
+            );
+        }
 
         return $next($this->forgetParameter($request));
     }
@@ -36,26 +43,30 @@ abstract class Middleware
             return;
         }
 
-        if ($locale->code->value === app()->getLocale()) {
+        if ($locale->code === app()->getLocale()) {
             return;
         }
 
-        $this->setLocale($locale->code->value);
+        $this->setLocale($locale->code);
         $this->event($locale);
     }
 
     protected function getLocale(Request $request): ?LocaleData
     {
-        if ($locale = $this->trim($this->detect($request))) {
-            return Locales::get($locale);
+        if (! $locale = $this->detect($request)) {
+            return null;
         }
 
-        return null;
+        if (! Locales::isInstalled($locale)) {
+            return null;
+        }
+
+        return Locales::info($locale);
     }
 
     protected function setLocale(string $locale): void
     {
-        app()->setLocale($locale);
+        Locales::set($locale);
 
         if (session()) {
             session()->put($this->routeConfig->name->session, $locale);
@@ -75,7 +86,7 @@ abstract class Middleware
     protected function forgetParameter(Request $request): Request
     {
         $request->route()->forgetParameter(
-          $this->routeConfig->name->parameter
+            $this->routeConfig->name->parameter
         );
 
         return $request;

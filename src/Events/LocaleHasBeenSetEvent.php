@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaravelLang\Routes\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
-use LaravelLang\Locales\Data\LocaleData;
+use LaravelLang\NativeLocaleNames\LocaleData;
 
 /** @method static void dispatch(LocaleData $locale) */
 class LocaleHasBeenSetEvent
