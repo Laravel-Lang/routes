@@ -36,11 +36,11 @@ abstract class Middleware
             return;
         }
 
-        if ($locale->locale->value === app()->getLocale()) {
+        if ($locale->code->value === app()->getLocale()) {
             return;
         }
 
-        $this->setLocale($locale->locale->value);
+        $this->setLocale($locale->code->value);
         $this->event($locale);
     }
 
