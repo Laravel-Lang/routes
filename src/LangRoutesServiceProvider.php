@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use LaravelLang\Routes\Facades\LocalizationRoute;
 
-class LaravelLangRoutesServiceProvider extends BaseServiceProvider
+class LangRoutesServiceProvider extends BaseServiceProvider
 {
     public function boot(): void
     {

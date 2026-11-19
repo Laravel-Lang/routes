@@ -81,7 +81,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "LaravelLang\\Routes\\LaravelLangRoutesServiceProvider"
+                "LaravelLang\\Routes\\LangRoutesServiceProvider"
             ]
         }
     },
