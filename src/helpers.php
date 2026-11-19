@@ -6,7 +6,7 @@ namespace LaravelLang\Routes;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use LaravelLang\Config\Services\RouteConfig;
+use LaravelLang\Config\Services\RouteLangConfig;
 use LaravelLang\LocaleList\Locale;
 use LaravelLang\Locales\Facades\Locales;
 use LaravelLang\NativeLocaleNames\LocaleData;
@@ -18,7 +18,7 @@ use function route;
 if (! function_exists('\LaravelLang\Routes\localizedRoute')) {
     function localizedRoute(string $route, array $parameters = [], bool $absolute = true): string
     {
-        $config = app()->make(RouteConfig::class);
+        $config = app()->make(RouteLangConfig::class);
 
         $locale = $config->name->parameter;
         $prefix = $config->prefix;

@@ -6,7 +6,7 @@ namespace LaravelLang\Routes\Middlewares;
 
 use Closure;
 use Illuminate\Http\Request;
-use LaravelLang\Config\Services\RouteConfig;
+use LaravelLang\Config\Services\RouteLangConfig;
 use LaravelLang\Exceptions\UnknownLocaleException;
 use LaravelLang\Locales\Facades\Locales;
 use LaravelLang\NativeLocaleNames\LocaleData;
@@ -21,7 +21,7 @@ abstract class Middleware
     abstract protected function detect(Request $request): int|string|null;
 
     public function __construct(
-        protected RouteConfig $routeConfig,
+        protected RouteLangConfig $routeConfig,
     ) {}
 
     public function __invoke(Request $request, Closure $next)

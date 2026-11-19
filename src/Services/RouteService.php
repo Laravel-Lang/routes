@@ -6,12 +6,12 @@ namespace LaravelLang\Routes\Services;
 
 use Closure;
 use Illuminate\Support\Facades\Route as BaseRoute;
-use LaravelLang\Config\Services\RouteConfig;
+use LaravelLang\Config\Services\RouteLangConfig;
 
 class RouteService
 {
     public function __construct(
-        protected RouteConfig $routeConfig,
+        protected RouteLangConfig $routeConfig,
     ) {}
 
     public function group(Closure $callback): void
