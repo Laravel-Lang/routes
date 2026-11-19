@@ -6,9 +6,9 @@ namespace LaravelLang\Routes\Middlewares;
 
 use Illuminate\Http\Request;
 
-class LocalizationByParameter extends Middleware
+class LocalizationByParameterMiddleware extends Middleware
 {
-    protected function detect(Request $request): bool|float|int|string|null
+    protected function detect(Request $request): int|string|null
     {
         if ($this->present($request)) {
             return $request->route()->parameter(

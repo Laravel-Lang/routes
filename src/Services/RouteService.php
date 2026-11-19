@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Support\Facades\Route as BaseRoute;
 use LaravelLang\Config\Services\RouteConfig;
 
-class Route
+class RouteService
 {
     public function __construct(
         protected RouteConfig $routeConfig,

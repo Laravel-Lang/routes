@@ -18,7 +18,7 @@ use function trim;
 
 abstract class Middleware
 {
-    abstract protected function detect(Request $request): bool|float|int|string|null;
+    abstract protected function detect(Request $request): int|string|null;
 
     public function __construct(
         protected RouteConfig $routeConfig,

@@ -7,9 +7,9 @@ namespace LaravelLang\Routes\Middlewares;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-class LocalizationByModel extends Middleware
+class LocalizationByModelMiddleware extends Middleware
 {
-    protected function detect(Request $request): bool|float|int|string|null
+    protected function detect(Request $request): int|string|null
     {
         if ($this->has($user = $this->user($request))) {
             return $user->getAttribute($this->attribute());

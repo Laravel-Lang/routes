@@ -13,7 +13,7 @@ use function array_merge;
 use function in_array;
 use function response;
 
-class LocalizationByParameterWithRedirect extends Middleware
+class LocalizationByParameterWithRedirectMiddleware extends Middleware
 {
     public function __invoke(Request $request, Closure $next)
     {
@@ -24,7 +24,7 @@ class LocalizationByParameterWithRedirect extends Middleware
         return parent::__invoke($request, $next);
     }
 
-    protected function detect(Request $request): bool|float|int|string|null
+    protected function detect(Request $request): int|string|null
     {
         return $request->route()?->parameter(
             $this->routeConfig->name->parameter

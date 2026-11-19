@@ -9,7 +9,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use LaravelLang\Locales\Facades\Locales;
 
-class LocalizationByParameterPrefix extends LocalizationByParameterWithRedirect
+class LocalizationByParameterPrefixMiddlewareMiddleware extends LocalizationByParameterWithRedirectMiddleware
 {
     protected function parameters(Request $request): array
     {

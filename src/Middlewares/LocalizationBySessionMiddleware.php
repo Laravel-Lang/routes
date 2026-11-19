@@ -6,9 +6,9 @@ namespace LaravelLang\Routes\Middlewares;
 
 use Illuminate\Http\Request;
 
-class LocalizationBySession extends Middleware
+class LocalizationBySessionMiddleware extends Middleware
 {
-    protected function detect(Request $request): bool|float|int|string|null
+    protected function detect(Request $request): int|string|null
     {
         if (! $request->hasSession()) {
             return null;
