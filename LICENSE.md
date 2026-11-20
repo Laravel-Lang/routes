@@ -1,5 +1,6 @@
 # The MIT License (MIT)
 
+
 Copyright (c) Andrey Helldar, Laravel-Lang Team
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
