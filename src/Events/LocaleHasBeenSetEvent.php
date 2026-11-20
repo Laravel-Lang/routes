@@ -7,8 +7,7 @@ namespace LaravelLang\Routes\Events;
 use Illuminate\Foundation\Events\Dispatchable;
 use LaravelLang\NativeLocaleNames\LocaleData;
 
-/** @method static void dispatch(LocaleData $locale) */
-class LocaleHasBeenSetEvent
+final readonly class LocaleHasBeenSetEvent
 {
     use Dispatchable;
 
