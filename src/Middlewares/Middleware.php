@@ -75,7 +75,7 @@ abstract class Middleware
 
     protected function event(LocaleData $locale): void
     {
-        LocaleHasBeenSetEvent::dispatch($locale);
+        event(new LocaleHasBeenSetEvent($locale));
     }
 
     protected function trim(bool|float|int|string|null $locale): string
