@@ -4,15 +4,33 @@ declare(strict_types=1);
 
 namespace LaravelLang\Routes\Middlewares;
 
+use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use LaravelLang\LocaleList\Locale;
 
 class LocalizationByModelMiddleware extends Middleware
 {
+    protected ?string $guard = null;
+
+    public function __invoke(Request $request, Closure $next, ?string $guard = null)
+    {
+        if ($guard === null) {
+            return parent::__invoke($request, $next);
+        }
+
+        $middleware = clone $this;
+        $middleware->guard = $guard;
+
+        return $middleware($request, $next);
+    }
+
     protected function detect(Request $request): int|string|null
     {
         if ($this->has($user = $this->user($request))) {
-            return $user->getAttribute($this->attribute());
+            $locale = $user->getAttribute($this->attribute());
+
+            return $locale instanceof Locale ? $locale->value : $locale;
         }
 
         return null;
@@ -25,7 +43,7 @@ class LocalizationByModelMiddleware extends Middleware
 
     protected function user(Request $request): ?Model
     {
-        return $request->user();
+        return $request->user($this->guard);
     }
 
     protected function attribute(): string
