@@ -19,7 +19,7 @@ class LocalizationByModelMiddleware extends Middleware
             return parent::__invoke($request, $next);
         }
 
-        $middleware = clone $this;
+        $middleware        = clone $this;
         $middleware->guard = $guard;
 
         return $middleware($request, $next);
