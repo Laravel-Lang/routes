@@ -11,9 +11,7 @@ class LocalizationByParameterMiddleware extends Middleware
     protected function detect(Request $request): int|string|null
     {
         if ($this->present($request)) {
-            return $request->route()->parameter(
-                $this->routeConfig->name->parameter
-            );
+            return $this->routeLocale($request);
         }
 
         return null;
@@ -23,7 +21,7 @@ class LocalizationByParameterMiddleware extends Middleware
     {
         return in_array(
             $this->routeConfig->name->parameter,
-            $request->route()->parameterNames(),
+            $request->route()?->parameterNames() ?? [],
             true
         );
     }

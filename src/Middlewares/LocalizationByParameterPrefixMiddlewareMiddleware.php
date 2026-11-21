@@ -11,6 +11,7 @@ use LaravelLang\Locales\Facades\Locales;
 
 class LocalizationByParameterPrefixMiddlewareMiddleware extends LocalizationByParameterWithRedirectMiddleware
 {
+    /** @return array<array-key, mixed> */
     protected function parameters(Request $request): array
     {
         return Arr::except($request->route()?->parameters() ?? [], [
@@ -38,6 +39,8 @@ class LocalizationByParameterPrefixMiddlewareMiddleware extends LocalizationByPa
     protected function isDefault(bool|float|int|string|null $locale): bool
     {
         if ($this->allowRedirect()) {
+            $locale = $locale === null ? null : (string) $locale;
+
             return Locales::info($locale)->alias === Locales::current();
         }
 

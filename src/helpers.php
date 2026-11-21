@@ -16,6 +16,9 @@ use function array_merge;
 use function route;
 
 if (! function_exists('\LaravelLang\Routes\localizedRoute')) {
+    /**
+     * @param  array<array-key, mixed>  $parameters
+     */
     function localizedRoute(string $route, array $parameters = [], bool $absolute = true): string
     {
         $config = app()->make(RouteLangConfig::class);

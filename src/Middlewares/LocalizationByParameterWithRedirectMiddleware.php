@@ -15,6 +15,12 @@ use function response;
 
 class LocalizationByParameterWithRedirectMiddleware extends Middleware
 {
+    /**
+     * @template TResponse
+     *
+     * @param  Closure(Request): TResponse  $next
+     * @return RedirectResponse|TResponse
+     */
     public function __invoke(Request $request, Closure $next)
     {
         if ($this->present($request) && $this->invalidParameter($request) && ($name = $this->routeName($request))) {
@@ -26,9 +32,7 @@ class LocalizationByParameterWithRedirectMiddleware extends Middleware
 
     protected function detect(Request $request): int|string|null
     {
-        return $request->route()?->parameter(
-            $this->routeConfig->name->parameter
-        );
+        return $this->routeLocale($request);
     }
 
     protected function invalidParameter(Request $request): ?bool
@@ -49,11 +53,12 @@ class LocalizationByParameterWithRedirectMiddleware extends Middleware
     {
         return in_array(
             $this->routeConfig->name->parameter,
-            $request->route()->parameterNames(),
+            $request->route()?->parameterNames() ?? [],
             true
         );
     }
 
+    /** @return array<array-key, mixed> */
     protected function parameters(Request $request): array
     {
         return array_merge($request->route()?->parameters() ?? [], [
@@ -66,6 +71,7 @@ class LocalizationByParameterWithRedirectMiddleware extends Middleware
         return $request->route()?->getName();
     }
 
+    /** @param array<array-key, mixed> $parameters */
     protected function redirect(string $name, array $parameters): RedirectResponse
     {
         return response()->redirectToRoute($name, $parameters);

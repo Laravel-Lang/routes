@@ -13,6 +13,12 @@ class LocalizationByModelMiddleware extends Middleware
 {
     protected ?string $guard = null;
 
+    /**
+     * @template TResponse
+     *
+     * @param  Closure(Request): TResponse  $next
+     * @return TResponse
+     */
     public function __invoke(Request $request, Closure $next, ?string $guard = null)
     {
         if ($guard === null) {
@@ -36,6 +42,7 @@ class LocalizationByModelMiddleware extends Middleware
         return null;
     }
 
+    /** @phpstan-assert-if-true =Model $user */
     protected function has(?Model $user): bool
     {
         return $user && $this->hasAttribute($user);
@@ -53,10 +60,6 @@ class LocalizationByModelMiddleware extends Middleware
 
     protected function hasAttribute(Model $user): bool
     {
-        if (method_exists($user, 'hasAttribute')) {
-            return $user->hasAttribute($this->attribute());
-        }
-
-        return array_key_exists($this->attribute(), $user->getAttributes());
+        return $user->hasAttribute($this->attribute());
     }
 }

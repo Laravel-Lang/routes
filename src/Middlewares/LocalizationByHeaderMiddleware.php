@@ -18,14 +18,15 @@ class LocalizationByHeaderMiddleware extends Middleware
         return $this->parse($header)['language'] ?? null;
     }
 
-    protected function parse(string $header): array
+    /** @return array<string, string>|null */
+    protected function parse(string $header): ?array
     {
         return Locale::parseLocale($header);
     }
 
     protected function header(Request $request): ?string
     {
-        return $request->header(
+        return $request->headers->get(
             $this->routeConfig->name->header
         );
     }

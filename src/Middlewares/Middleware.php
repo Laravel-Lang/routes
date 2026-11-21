@@ -6,8 +6,10 @@ namespace LaravelLang\Routes\Middlewares;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use LaravelLang\Config\Services\RouteLangConfig;
 use LaravelLang\Exceptions\UnknownLocaleException;
+use LaravelLang\LocaleList\Locale;
 use LaravelLang\Locales\Facades\Locales;
 use LaravelLang\NativeLocaleNames\LocaleData;
 use LaravelLang\Routes\Events\LocaleHasBeenSetEvent;
@@ -24,6 +26,12 @@ abstract class Middleware
         protected RouteLangConfig $routeConfig,
     ) {}
 
+    /**
+     * @template TResponse
+     *
+     * @param  Closure(Request): TResponse  $next
+     * @return TResponse
+     */
     public function __invoke(Request $request, Closure $next)
     {
         try {
@@ -53,7 +61,7 @@ abstract class Middleware
 
     protected function getLocale(Request $request): ?LocaleData
     {
-        if (! $locale = $this->detect($request)) {
+        if (! $locale = (string) $this->detect($request)) {
             return null;
         }
 
@@ -68,9 +76,7 @@ abstract class Middleware
     {
         Locales::set($locale);
 
-        if (session()) {
-            session()->put($this->routeConfig->name->session, $locale);
-        }
+        session()?->put($this->routeConfig->name->session, $locale);
     }
 
     protected function event(LocaleData $locale): void
@@ -83,9 +89,20 @@ abstract class Middleware
         return trim((string) $locale);
     }
 
+    protected function routeLocale(Request $request): int|string|null
+    {
+        $locale = Arr::get($request->route()?->parameters() ?? [], $this->routeConfig->name->parameter);
+
+        if ($locale instanceof Locale) {
+            return $locale->value;
+        }
+
+        return is_string($locale) || is_int($locale) ? $locale : null;
+    }
+
     protected function forgetParameter(Request $request): Request
     {
-        $request->route()->forgetParameter(
+        $request->route()?->forgetParameter(
             $this->routeConfig->name->parameter
         );
 
