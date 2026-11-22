@@ -3,53 +3,35 @@
     "description": "Easy and fast way to localize routes",
     "license": "MIT",
     "keywords": [
-        "laravel",
-        "languages",
+        "laravel-lang",
+        "i18n",
         "routes",
         "translations",
         "translate",
-        "localization",
-        "l18n"
+        "localization"
     ],
     "authors": [
         {
             "name": "Andrey Helldar",
-            "email": "helldar@dragon-code.pro",
-            "homepage": "https://dragon-code.pro"
+            "email": "helldar@dragon-code.pro"
         },
         {
             "name": "Laravel-Lang Team",
-            "homepage": "https://github.com/Laravel-Lang"
+            "homepage": "https://laravel-lang.com"
         }
     ],
     "support": {
-        "issues": "https://github.com/Laravel-Lang/routes/issues",
-        "source": "https://github.com/Laravel-Lang/routes"
+        "source": "https://github.com/Laravel-Lang/mona"
     },
-    "funding": [
-        {
-            "type": "boosty",
-            "url": "https://boosty.to/dragon-code"
-        },
-        {
-            "type": "yoomoney",
-            "url": "https://yoomoney.ru/to/410012608840929"
-        }
-    ],
     "require": {
-        "php": "^8.1",
-        "illuminate/config": "^10.0 || ^11.0 || ^12.0 || ^13.0 || dev-master",
-        "illuminate/http": "^10.0 || ^11.0 || ^12.0 || ^13.0 || dev-master",
-        "illuminate/routing": "^10.0 || ^11.0 || ^12.0 || ^13.0 || dev-master",
-        "illuminate/support": "^10.0 || ^11.0 || ^12.0 || ^13.0 || dev-master",
-        "laravel-lang/config": "^1.13",
-        "laravel-lang/locales": "^2.10"
-    },
-    "require-dev": {
-        "orchestra/testbench": "^8.23 || ^9.1 || ^10.0 || ^11.0",
-        "pestphp/pest": "^2.34 || ^3.0 || ^4.0",
-        "pestphp/pest-plugin-laravel": "^2.4 || ^3.0 || ^4.0",
-        "symfony/var-dumper": "^6.0 || ^7.0 || ^8.0"
+        "php": "^8.3",
+        "illuminate/database": "^12.0 || ^13.0 || dev-master",
+        "illuminate/http": "^12.0 || ^13.0 || dev-master",
+        "illuminate/support": "^12.0 || ^13.0 || dev-master",
+        "laravel-lang/config": "self.version",
+        "laravel-lang/exceptions": "self.version",
+        "laravel-lang/locale-names": "self.version",
+        "laravel-lang/locales": "self.version"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -61,20 +43,7 @@
             "src/helpers.php"
         ]
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
-    },
     "config": {
-        "allow-plugins": {
-            "composer/package-versions-deprecated": true,
-            "ergebnis/composer-normalize": true,
-            "laravel/pint": true,
-            "pestphp/pest-plugin": true,
-            "php-http/discovery": true,
-            "symfony/thanks": true
-        },
         "preferred-install": "dist",
         "sort-packages": true
     },
@@ -84,8 +53,5 @@
                 "LaravelLang\\Routes\\LangRoutesServiceProvider"
             ]
         }
-    },
-    "scripts": {
-        "test": "vendor/bin/pest --parallel"
     }
 }

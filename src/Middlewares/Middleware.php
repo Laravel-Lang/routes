@@ -29,7 +29,6 @@ abstract class Middleware
      * @template TResponse
      *
      * @param  Closure(Request): TResponse  $next
-     *
      * @return TResponse
      */
     public function __invoke(Request $request, Closure $next)
