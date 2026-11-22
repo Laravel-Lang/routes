@@ -8,6 +8,10 @@ use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use LaravelLang\LocaleList\Locale;
+use TypeError;
+
+use function is_int;
+use function is_string;
 
 class LocalizationByModelMiddleware extends Middleware
 {
@@ -36,7 +40,11 @@ class LocalizationByModelMiddleware extends Middleware
         if ($this->has($user = $this->user($request))) {
             $locale = $user->getAttribute($this->attribute());
 
-            return $locale instanceof Locale ? $locale->value : $locale;
+            return match (true) {
+                $locale instanceof Locale                             => $locale->value,
+                $locale === null, is_int($locale), is_string($locale) => $locale,
+                default                                               => throw new TypeError('The model locale must be a Locale, an integer, a string, or null'),
+            };
         }
 
         return null;
@@ -50,7 +58,13 @@ class LocalizationByModelMiddleware extends Middleware
 
     protected function user(Request $request): ?Model
     {
-        return $request->user($this->guard);
+        $user = $request->user($this->guard);
+
+        if ($user !== null && ! $user instanceof Model) {
+            throw new TypeError('The authenticated user must be an Eloquent model');
+        }
+
+        return $user;
     }
 
     protected function attribute(): string

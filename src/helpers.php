@@ -10,9 +10,11 @@ use LaravelLang\Config\Services\RouteLangConfig;
 use LaravelLang\LocaleList\Locale;
 use LaravelLang\Locales\Facades\Locales;
 use LaravelLang\NativeLocaleNames\LocaleData;
+use TypeError;
 
 use function app;
 use function array_merge;
+use function is_string;
 use function route;
 
 if (! function_exists('\LaravelLang\Routes\localizedRoute')) {
@@ -26,17 +28,13 @@ if (! function_exists('\LaravelLang\Routes\localizedRoute')) {
         $locale = $config->name->parameter;
         $prefix = $config->prefix;
 
-        $parameters[$locale] ??= Locales::fallback();
+        $value = $parameters[$locale] ??= Locales::fallback();
 
-        $hide = static function (Locale|LocaleData|string $locale) use ($config): bool {
-            if (! $config->hide || ! Locales::isInstalled($locale)) {
-                return false;
-            }
+        if (! $value instanceof Locale && ! $value instanceof LocaleData && ! is_string($value)) {
+            throw new TypeError('The locale route parameter must be a Locale, a LocaleData, or a string');
+        }
 
-            return Locales::toAlias($locale) === Locales::fallback();
-        };
-
-        if ($hide($parameters[$locale])) {
+        if ($config->hide && Locales::isInstalled($value) && Locales::toAlias($value) === Locales::fallback()) {
             unset($parameters[$locale]);
 
             return route($route, $parameters, $absolute);
