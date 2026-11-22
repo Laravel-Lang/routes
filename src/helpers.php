@@ -7,8 +7,8 @@ namespace LaravelLang\Routes;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use LaravelLang\Config\Services\RouteLangConfig;
+use LaravelLang\Exceptions\InvalidLocaleInputException;
 use LaravelLang\Locales\Facades\Locales;
-use TypeError;
 
 use function app;
 use function array_merge;
@@ -28,7 +28,7 @@ if (! function_exists('\LaravelLang\Routes\localizedRoute')) {
         $value = $parameters[$locale] ??= Locales::fallback();
 
         if (! Locales::acceptsInput($value)) {
-            throw new TypeError('The locale route parameter must be a Locale, a LocaleData, or a string');
+            throw InvalidLocaleInputException::forRouteParameter();
         }
 
         if ($config->hide && Locales::isInstalled($value) && Locales::toAlias($value) === Locales::fallback()) {

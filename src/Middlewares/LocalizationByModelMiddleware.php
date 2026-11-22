@@ -7,8 +7,8 @@ namespace LaravelLang\Routes\Middlewares;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use LaravelLang\Exceptions\InvalidAuthenticatedUserException;
 use LaravelLang\Locales\Facades\Locales;
-use TypeError;
 
 use function is_int;
 
@@ -20,7 +20,6 @@ class LocalizationByModelMiddleware extends Middleware
      * @template TResponse
      *
      * @param  Closure(Request): TResponse  $next
-     *
      * @return TResponse
      */
     public function __invoke(Request $request, Closure $next, ?string $guard = null)
@@ -46,7 +45,7 @@ class LocalizationByModelMiddleware extends Middleware
         if (is_int($locale)) {
             return $locale;
         }
-        
+
         return Locales::normalize($locale);
     }
 
@@ -61,7 +60,7 @@ class LocalizationByModelMiddleware extends Middleware
         $user = $request->user($this->guard);
 
         if ($user !== null && ! $user instanceof Model) {
-            throw new TypeError('The authenticated user must be an Eloquent model');
+            throw new InvalidAuthenticatedUserException;
         }
 
         return $user;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaravelLang\Routes\Middlewares;
 
 use Illuminate\Http\Request;
-use TypeError;
+use LaravelLang\Exceptions\InvalidLocaleInputException;
 
 use function is_int;
 use function is_string;
@@ -23,7 +23,7 @@ class LocalizationBySessionMiddleware extends Middleware
         );
 
         if ($locale !== null && ! is_int($locale) && ! is_string($locale)) {
-            throw new TypeError('The session locale must be an integer, a string, or null');
+            throw InvalidLocaleInputException::forSession();
         }
 
         return $locale;
