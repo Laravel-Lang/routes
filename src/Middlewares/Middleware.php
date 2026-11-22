@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use LaravelLang\Config\Services\RouteLangConfig;
 use LaravelLang\Exceptions\UnknownLocaleException;
+use LaravelLang\LocaleNames\LocaleData;
 use LaravelLang\Locales\Facades\Locales;
-use LaravelLang\NativeLocaleNames\LocaleData;
 use LaravelLang\Routes\Events\LocaleHasBeenSetEvent;
 
 use function app;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaravelLang\Routes\Events;
 
-use LaravelLang\NativeLocaleNames\LocaleData;
+use LaravelLang\LocaleNames\LocaleData;
 
 final readonly class LocaleHasBeenSetEvent
 {
