@@ -7,11 +7,10 @@ namespace LaravelLang\Routes\Middlewares;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use LaravelLang\LocaleList\Locale;
+use LaravelLang\Locales\Facades\Locales;
 use TypeError;
 
 use function is_int;
-use function is_string;
 
 class LocalizationByModelMiddleware extends Middleware
 {
@@ -21,6 +20,7 @@ class LocalizationByModelMiddleware extends Middleware
      * @template TResponse
      *
      * @param  Closure(Request): TResponse  $next
+     *
      * @return TResponse
      */
     public function __invoke(Request $request, Closure $next, ?string $guard = null)
@@ -37,17 +37,17 @@ class LocalizationByModelMiddleware extends Middleware
 
     protected function detect(Request $request): int|string|null
     {
-        if ($this->has($user = $this->user($request))) {
-            $locale = $user->getAttribute($this->attribute());
-
-            return match (true) {
-                $locale instanceof Locale                             => $locale->value,
-                $locale === null, is_int($locale), is_string($locale) => $locale,
-                default                                               => throw new TypeError('The model locale must be a Locale, an integer, a string, or null'),
-            };
+        if (! $this->has($user = $this->user($request))) {
+            return null;
         }
 
-        return null;
+        $locale = $user->getAttribute($this->attribute());
+
+        if (is_int($locale)) {
+            return $locale;
+        }
+        
+        return Locales::normalize($locale);
     }
 
     /** @phpstan-assert-if-true =Model $user */

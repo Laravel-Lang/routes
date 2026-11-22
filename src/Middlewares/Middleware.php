@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use LaravelLang\Config\Services\RouteLangConfig;
 use LaravelLang\Exceptions\UnknownLocaleException;
-use LaravelLang\LocaleList\Locale;
 use LaravelLang\Locales\Facades\Locales;
 use LaravelLang\NativeLocaleNames\LocaleData;
 use LaravelLang\Routes\Events\LocaleHasBeenSetEvent;
@@ -30,6 +29,7 @@ abstract class Middleware
      * @template TResponse
      *
      * @param  Closure(Request): TResponse  $next
+     *
      * @return TResponse
      */
     public function __invoke(Request $request, Closure $next)
@@ -93,11 +93,7 @@ abstract class Middleware
     {
         $locale = Arr::get($request->route()?->parameters() ?? [], $this->routeConfig->name->parameter);
 
-        if ($locale instanceof Locale) {
-            return $locale->value;
-        }
-
-        return is_string($locale) || is_int($locale) ? $locale : null;
+        return Locales::normalize($locale);
     }
 
     protected function forgetParameter(Request $request): Request
