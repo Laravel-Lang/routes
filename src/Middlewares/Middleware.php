@@ -76,7 +76,7 @@ abstract class Middleware
     {
         Locales::set($locale);
 
-        session()?->put($this->routeConfig->name->session, $locale);
+        session()->put($this->routeConfig->name->session, $locale);
     }
 
     protected function event(LocaleData $locale): void
