@@ -1,43 +1,23 @@
-# Routes Localization
+# Laravel-Lang: Routes
 
+<p align="center">
+    <a href="https://laravel-lang.com" target="_blank"><img src="https://raw.githubusercontent.com/Laravel-Lang/art/main/socials/hero.png"></a>
+</p>
 
-<picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Routes.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&icon=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&theme=dark&packageManager=composer+require&packageName=laravel-lang%2Froutes&description=by+Laravel+Lang&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg">
-    <img src="https://banners.beyondco.de/Routes.png?pattern=topography&style=style_2&fontSize=100px&md=1&showWatermark=1&icon=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&theme=light&packageManager=composer+require&packageName=laravel-lang%2Froutes&description=by+Laravel+Lang&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg" alt="Routes">
-</picture>
-
-[![Stable Version][badge_stable]][link_packagist]
-[![Total Downloads][badge_downloads]][link_packagist]
-[![Github Workflow Status][badge_build]][link_build]
-[![License][badge_license]](https://laravel-lang.com/license)
+[![Stable Version](https://img.shields.io/github/v/release/laravel-lang/routes?label=stable&style=flat-square)](https://packagist.org/packages/laravel-lang/routes)
+[![Total Downloads](https://img.shields.io/packagist/dt/laravel-lang/routes.svg?style=flat-square)](https://packagist.org/packages/laravel-lang/routes)
+[![Github Workflow Status](https://img.shields.io/github/actions/workflow/status/laravel-lang/mona/tests.yml?style=flat-square)](https://github.com/Laravel-Lang/mona)
+[![License](https://img.shields.io/packagist/l/laravel-lang/routes.svg?style=flat-square)](https://laravel-lang.com/license)
 
 
 ## Documentation
 
-
-See the [documentation](https://laravel-lang.com/routes) for detailed installation.
-
+See the [documentation](https://laravel-lang.com/start) for detailed information.
 
 ## Contributing
 
-
 Please see [CONTRIBUTING](https://laravel-lang.com/contributing) for details.
-
-
-## Support Us
-
-
-❤️ Laravel Lang? Please consider supporting our collective on [Boosty](https://boosty.to/laravel-lang).
-
 
 ## License
 
-
 This package is licensed under the [MIT License](https://laravel-lang.com/license).
-
-[badge_build]: https://img.shields.io/github/actions/workflow/status/laravel-lang/routes/tests.yml?branch=main&style=flat-square
-[badge_downloads]: https://img.shields.io/packagist/dt/laravel-lang/routes.svg?style=flat-square
-[badge_license]: https://img.shields.io/packagist/l/laravel-lang/routes.svg?style=flat-square
-[badge_stable]: https://img.shields.io/github/v/release/laravel-lang/routes?label=stable&style=flat-square
-[link_build]: https://github.com/laravel-lang/routes/actions
-[link_packagist]: https://packagist.org/packages/laravel-lang/routes
