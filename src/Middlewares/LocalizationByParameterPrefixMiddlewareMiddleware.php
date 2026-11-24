@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use LaravelLang\Locales\Facades\Locales;
+use LaravelLang\Routes\Services\RouteService;
+
+use function is_string;
+use function strlen;
+use function substr;
 
 class LocalizationByParameterPrefixMiddlewareMiddleware extends LocalizationByParameterWithRedirectMiddleware
 {
@@ -21,8 +26,15 @@ class LocalizationByParameterPrefixMiddlewareMiddleware extends LocalizationByPa
 
     protected function routeName(Request $request): ?string
     {
-        if ($name = $request->route()?->getName()) {
-            return Str::after($name, $this->routePrefix());
+        $route = $request->route();
+
+        if ($route && ($name = $route->getName())) {
+            $parent = $route->getAction(RouteService::ParentNameAttribute);
+            $parent = is_string($parent) ? $parent : '';
+            $prefix = $route->getAction(RouteService::LocalizedPrefixAttribute);
+            $prefix = is_string($prefix) ? $prefix : $this->routePrefix();
+
+            return $parent . Str::after(substr($name, strlen($parent)), $prefix);
         }
 
         return null;
@@ -49,7 +61,7 @@ class LocalizationByParameterPrefixMiddlewareMiddleware extends LocalizationByPa
 
     protected function routePrefix(): string
     {
-        return $this->routeConfig->prefix;
+        return $this->routeConfig->routeNamePrefix();
     }
 
     protected function allowRedirect(): bool
