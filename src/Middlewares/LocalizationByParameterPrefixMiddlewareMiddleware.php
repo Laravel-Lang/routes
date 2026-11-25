@@ -7,23 +7,34 @@ namespace LaravelLang\Routes\Middlewares;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use LaravelLang\Config\Facades\Config;
 use LaravelLang\Locales\Facades\Locales;
-use LaravelLang\Routes\Helpers\Route;
+use LaravelLang\Routes\Services\RouteService;
 
-class LocalizationByParameterPrefix extends LocalizationByParameterWithRedirect
+use function is_string;
+use function strlen;
+use function substr;
+
+class LocalizationByParameterPrefixMiddlewareMiddleware extends LocalizationByParameterWithRedirectMiddleware
 {
+    /** @return array<array-key, mixed> */
     protected function parameters(Request $request): array
     {
         return Arr::except($request->route()?->parameters() ?? [], [
-            $this->names()->parameter,
+            $this->routeConfig->name->parameter,
         ]);
     }
 
     protected function routeName(Request $request): ?string
     {
-        if ($name = $request->route()?->getName()) {
-            return Str::after($name, $this->routePrefix());
+        $route = $request->route();
+
+        if ($route && ($name = $route->getName())) {
+            $parent = $route->getAction(RouteService::ParentNameAttribute);
+            $parent = is_string($parent) ? $parent : '';
+            $prefix = $route->getAction(RouteService::LocalizedPrefixAttribute);
+            $prefix = is_string($prefix) ? $prefix : $this->routePrefix();
+
+            return $parent . Str::after(substr($name, strlen($parent)), $prefix);
         }
 
         return null;
@@ -40,7 +51,9 @@ class LocalizationByParameterPrefix extends LocalizationByParameterWithRedirect
     protected function isDefault(bool|float|int|string|null $locale): bool
     {
         if ($this->allowRedirect()) {
-            return Locales::info($locale)->code === Locales::getDefault()->code;
+            $locale = $locale === null ? null : (string) $locale;
+
+            return Locales::info($locale)->alias === Locales::current();
         }
 
         return false;
@@ -48,11 +61,11 @@ class LocalizationByParameterPrefix extends LocalizationByParameterWithRedirect
 
     protected function routePrefix(): string
     {
-        return Route::prefix();
+        return $this->routeConfig->routeNamePrefix();
     }
 
     protected function allowRedirect(): bool
     {
-        return Config::shared()->routes->redirect;
+        return $this->routeConfig->redirect;
     }
 }
