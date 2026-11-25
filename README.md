@@ -12,7 +12,7 @@
 
 ## Documentation
 
-See the [documentation](https://laravel-lang.com/start) for detailed information.
+[Register localized routes and generate URLs.](https://laravel-lang.com/routes)
 
 ## Contributing
 
